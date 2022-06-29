@@ -1,7 +1,8 @@
 # Chartmetric
 [Webpage](https://chartmetric.com/)
 ## Issues
-Requires signup and I'm not sure what the free version allows. There's a 7 day trial
+- Requires signup and I'm not sure what the free version allows. There's a 7 day trial
+- Looks very complex
 
 ### Token refresh - not sure how this works in app
 curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
