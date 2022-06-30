@@ -15,6 +15,10 @@ Put notes here for anything you think might help others
 - [Ideas](#Ideas)
 - [Links](#Links)
 
+## Tech we will use
+https://materializecss.com/getting-started.html
+
+
 
 ## Ideas
 put any new ideas here
