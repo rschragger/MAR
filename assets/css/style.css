@@ -1,0 +1,57 @@
+.heading {
+    line-height: 64px;
+    margin: 0;
+  }
+  
+  #nav {
+    top: -64px;
+  }
+  
+  .search-inpute{
+      color: white;
+  }
+  
+  .favorite-title i {
+      font-size: 20px;
+  }
+  
+  .top-list-item p {
+    margin: 0;
+  }
+  
+  .top-list-item-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .collapsible-header:hover {
+    background-color: #f8f8f8;
+  }
+  
+  .top-list-item-header a {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+  }
+  
+  .top-number {
+      margin-right: 8px;
+  }
+  
+  .top-list-item-title-box {
+    margin-left: 16px;
+    width: 100%;
+  }
+  
+  .description {
+      overflow: auto;
+      max-height: 300px;
+      overflow-wrap: break-word;
+  }
+  
+  iframe {
+    width: 100%;
+  }
+  
