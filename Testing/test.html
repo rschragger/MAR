@@ -12,14 +12,26 @@
 <body>
     <div id="testHere"></div>
 </body>
+<script src="../Testing/PlaylistJSONdata.js"></script>
+<script src="../Testing/CityJSONdata.js"></script>
 <script>
     var testDiv = document.getElementById('testHere');
 
-    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2NzIzOTIwOTcwLCJpYXQiOjE2NTY3MjM5MjAsImV4cCI6MTY1NjcyNzUyMH0.2lcuA_jXeUQIEO8WuI6YbB8bYbYCuoLvldACQWQhYE0";
+    var cityStore = JSON.parse(localStorage.getItem('cityData'));
+var newText="";
+    for(i=0 ; i<10 ; i++){
+newText += (i+1) + ': <b>' + cityStore.obj[i].name + ",</b> "+ cityStore.obj[i].artist_names + "<br> ";
+    }
+    
+    testDiv.innerHTML = newText ;
+
+    
+/* 
+    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2NzMyMTg2NjE5LCJpYXQiOjE2NTY3MzIxODYsImV4cCI6MTY1NjczNTc4Nn0.o2EN02unwIx5rbSjxi-c4Mfh7xqNmL64m4ijW-_ToOw";
 
     var testUrl = 'https://api.chartmetric.com/api/city/7060/shazam/top-tracks'
 
-    /* ---- This section is supposed to be the refresh token bit. Use curl supplied and get
+    ---- This section is supposed to be the refresh token bit. Use curl supplied and get
         //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
         var refreshUrl = 'https://api.chartmetric.com/api/token';
         var refToken = ""; //When we get this working, possibly put API  refresh tokenkey here
@@ -54,7 +66,7 @@
 
 
     //learnt from https://gomakethings.com/api-authentication-with-vanilla-js/
-
+/*
     fetch(testUrl, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -77,7 +89,7 @@
     }).catch(function (error) {
         console.warn(error);
     });
-
+*/
 </script>
 
 </html>
