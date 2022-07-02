@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href=""> -->
+    <title>Testing Document</title>
+</head>
+
+<body>
+    <div id="testHere"></div>
+</body>
+<script>
+    var testDiv = document.getElementById('testHere');
+
+    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2NzIzOTIwOTcwLCJpYXQiOjE2NTY3MjM5MjAsImV4cCI6MTY1NjcyNzUyMH0.2lcuA_jXeUQIEO8WuI6YbB8bYbYCuoLvldACQWQhYE0";
+
+    var testUrl = 'https://api.chartmetric.com/api/city/7060/shazam/top-tracks'
+
+    /* ---- This section is supposed to be the refresh token bit. Use curl supplied and get
+        //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
+        var refreshUrl = 'https://api.chartmetric.com/api/token';
+        var refToken = ""; //When we get this working, possibly put API  refresh tokenkey here
+    
+        fetch(refreshUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+              //  "Access-Control-Allow-Origin": document.location,
+            },
+            data: {
+                "refreshtoken": refToken,
+            },
+            mode: 'no-cors',
+    
+        }).then(function (response) {
+            if (response.ok) {
+                console.log('refresh response OK:');
+                console.log(response.json());
+                return response.json();
+            }
+            console.log('refresh response !OK:');
+                console.log(response.json());
+    //        throw response;
+        }).then(function (data) {
+    
+            console.log(data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+       // ----- End of refresh token ----- */
+
+
+    //learnt from https://gomakethings.com/api-authentication-with-vanilla-js/
+
+    fetch(testUrl, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            // 'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
+           // 'Access-Control-Allow-Origin': "158.140.193.68",
+        },
+        mode: "no-cors",
+    }).then(function (response) {
+        if (response.ok) {
+            console.log('test response OK:');
+            console.log(response);
+            return response.json();
+        }
+        console.log('test response !OK:');
+        console.log(response);
+        throw response;
+    }).then(function (data) {
+        console.log(data);
+        testDiv.textContent = data;
+    }).catch(function (error) {
+        console.warn(error);
+    });
+
+</script>
+
+</html>

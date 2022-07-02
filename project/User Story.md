@@ -18,7 +18,7 @@ Search items will be on the left and will include
 Found top ten list will be displayed with at least chart position, Artist and Track names.
 Additionally we can add other info such as previous chart position, album thumbnail art etc
 
-Slecting one of the tracks will open a panel on the right which will display a video and/or audio and/or album art etc and comprehensive information on the artist and track. The video or song can be in a frame that might/will play
+Selecting one of the tracks will open a panel on the right which will display a video and/or audio and/or album art etc and comprehensive information on the artist and track. The video or song can be in a frame that might/will play
 
 ## Login Screen
 This might be necesary for configuring API login information
