@@ -1,0 +1,14 @@
+https://rschragger.github.io/MAR
+
+API account created
+Here are the details of your new API account.
+
+Application name	MAR Project
+API key	2a59d453e1ea99a2a1d8ce0b3135a1be
+Shared secret	65d734cefaa36ac2510d17e340ba742c
+Registered to	Reevus70
+
+
+/2.0/?method=chart.gettoptracks&api_key=2a59d453e1ea99a2a1d8ce0b3135a1be&format=json
+
+http://www.last.fm/api/auth/?api_key= 2a59d453e1ea99a2a1d8ce0b3135a1be
