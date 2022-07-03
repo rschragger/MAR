@@ -40,12 +40,12 @@ newText +=
     testDiv.innerHTML = newText ;
 
     
-/* 
-    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2NzMyMTg2NjE5LCJpYXQiOjE2NTY3MzIxODYsImV4cCI6MTY1NjczNTc4Nn0.o2EN02unwIx5rbSjxi-c4Mfh7xqNmL64m4ijW-_ToOw";
+
+    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2ODQwNjIxNDc2LCJpYXQiOjE2NTY4NDA2MjEsImV4cCI6MTY1Njg0NDIyMX0.oTkTGvl7Pl16_AIGhD9m9v7P4MDzTEdAGKd0iFH2qGg";
 
     var testUrl = 'https://api.chartmetric.com/api/city/7060/shazam/top-tracks'
 
-    ---- This section is supposed to be the refresh token bit. Use curl supplied and get
+  /*  ---- This section is supposed to be the refresh token bit. Use curl supplied and get
         //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
         var refreshUrl = 'https://api.chartmetric.com/api/token';
         var refToken = ""; //When we get this working, possibly put API  refresh tokenkey here
@@ -80,12 +80,15 @@ newText +=
 
 
     //learnt from https://gomakethings.com/api-authentication-with-vanilla-js/
-/*
+
     fetch(testUrl, {
+       // method: 'GET',
         headers: {
-            'Authorization': `Bearer ${token}`,
-            // 'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
-           // 'Access-Control-Allow-Origin': "158.140.193.68",
+            // 'Authorization':  token ,
+            'Authorization': 'Bearer ' + token ,
+            //  'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
+            // 'Access-Control-Allow-Origin': "158.140.193.68",
+            // 'url': document.location,
         },
         mode: "no-cors",
     }).then(function (response) {
@@ -103,7 +106,7 @@ newText +=
     }).catch(function (error) {
         console.warn(error);
     });
-*/
+
 </script>
 
 </html>
