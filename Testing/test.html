@@ -7,10 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href=""> -->
     <title>Testing Document</title>
+<style>
+    img{
+        width:100%;
+        max-width:100px;
+    }</style>
 </head>
 
 <body>
     <div id="testHere"></div>
+    
 </body>
 <script src="../Testing/PlaylistJSONdata.js"></script>
 <script src="../Testing/CityJSONdata.js"></script>
@@ -20,7 +26,15 @@
     var cityStore = JSON.parse(localStorage.getItem('cityData'));
 var newText="";
     for(i=0 ; i<10 ; i++){
-newText += (i+1) + ': <b>' + cityStore.obj[i].name + ",</b> "+ cityStore.obj[i].artist_names + "<br> ";
+
+newText += 
+(i+1)
++ ": " +
+"<img src=" + cityStore.obj[i].image_url + " >"
++
+'<b>' + cityStore.obj[i].name + ",</b> "+ cityStore.obj[i].artist_names 
++ 
+ "<br> ";
     }
     
     testDiv.innerHTML = newText ;
