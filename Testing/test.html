@@ -10,7 +10,7 @@
     <style>
         img {
             width: 100%;
-            max-width: 100px;
+            max-width: 50px;
         }
     </style>
 </head>
@@ -19,8 +19,8 @@
     <div id="testHere"></div>
 
 </body>
-<script src="../Testing/PlaylistJSONdata.js"></script>
-<script src="../Testing/CityJSONdata.js"></script>
+<!-- <script src="../Testing/PlaylistJSONdata.js"></script> -->
+<!-- <script src="../Testing/CityJSONdata.js"></script> -->
 <script>
     var testDiv = document.getElementById('testHere');
 
@@ -29,62 +29,49 @@
     var newText = '';
     var genToken = '';
 
-  
 
 
-        //  ---- This section is supposed to be the refresh token bit. Use curl supplied and get
-        //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
-        var refreshUrl = 'https://api.chartmetric.com/api/token';
-        var refToken = "uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS"; //When we get this working, possibly put API  refresh tokenkey here
-function refreshAPI(){
+
+    //  ---- This section is the refresh token bit. Use curl supplied and get
+    //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
+    var refreshUrl = 'https://api.chartmetric.com/api/token';
+    var refToken = "uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS"; //When we get this working, possibly hide  refresh token key 
+    function refreshAPI() {
         fetch(refreshUrl, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                //  "Access-Control-Allow-Origin": document.location,
             },
             body: JSON.stringify({
-                refreshtoken: 'uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS'// refToken ,
+                refreshtoken: refToken, //'uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS'// refToken ,
             })
-            //mode: 'no-cors',
-
         }).then(function (response) {
-            // if (response.ok) {
-                // console.log('refresh response OK:');
-                // console.log(response.json());
-
-                return response.json();
-            // }else{
-            // console.log('refresh response !OK:');
-            // console.log(response.json());
-            //         throw response;}
+            return response.json();
         }).then(function (data) {
-           console.log(data)
+            console.log(data)
             genToken = "Bearer " + data.token,
-            getDataFromApi()
-                ;
+                getTopTenApi('', 'shazam'); //'7060','shazam'
         }).catch(function (error) {
             console.log(error);
-        });}
-        // ----- End of refresh token ----- */
+        });
+    }
+    // ----- End of refresh token ----- */
 
+    function getTopTenApiOrig(cityCode, service) {
+        //Allowed values for service: youtube, radio, shazam
+        if (cityCode != '') {
+            var cityParam = 'city/' + cityCode + '/'
+        } else { var cityParam = 'city/*/' };
+        if (service != '') {
+            var serviceParam = service + '/'
+        } else { var serviceParam = '' };
 
-        //learnt from https://gomakethings.com/api-authentication-with-vanilla-js/
-        var testUrl = 'https://api.chartmetric.com/api/city/7060/shazam/top-tracks'
-
-
-        // fetch(testUrl + "?Authorization=Bearer%20" + token, {
-        //curl -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2OTI1MzU1NzgxLCJpYXQiOjE2NTY5MjUzNTUsImV4cCI6MTY1NjkyODk1NX0.QSRaqH7qWbRHyP47YZ3UyOB71JDcHXB1Krjjjl9wVH8' https://api.chartmetric.com/api/city/7060/radio/top-tracks?limit=10
-
-
-        //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2OTQwMDMyMTk2LCJpYXQiOjE2NTY5NDAwMzIsImV4cCI6MTY1Njk0MzYzMn0.ZKQg-zzM-1DGWHYgge8zDdBaEgKCBSoUM9NYA_za3_E";
-        //var bearerToken = 'Bearer ' + token;
-function getDataFromApi(){
-        fetch(testUrl, {
+        var topTenUrl = 'https://api.chartmetric.com/api/' + cityParam + serviceParam + 'top-tracks'
+        fetch(topTenUrl, {
             // method: 'GET',
-            headers:{
+            headers: {
                 // 'Authorization':  token ,
-                'Authorization': genToken ,
+                'Authorization': genToken,
                 'content-type': 'application/json',
                 // 'Cookie': 'connect.sid=s%3Ae3110c90-fb7a-11ec-a565-5785d2c2acdb.LrKo7YyeGXzDmsPEGIzDDHoV0qiXsSvKScfJooyX7p0',
                 // 'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
@@ -109,13 +96,69 @@ function getDataFromApi(){
         }).then(function (data) {
             console.log(data);
             //testDiv.textContent = data;
-            window.cityStore = data ;
+            window.cityStore = data;
             makeDiv();
         }).catch(function (error) {
             console.warn(error);
-        })};
+        })
+    };
 
-        function makeDiv() {
+    function getTopTenApi(service, countryCode, cityCode) {
+        // Shazam
+        // https://api.chartmetric.com/api/charts/shazam?date=2020-09-01&country_code=AU&city=Melbourne
+        // Youtube
+        // https://api.chartmetric.com/api/charts/youtube/tracks?date=2020-02-06&country_code=us&offset=0
+        // Spotify
+        // https://api.chartmetric.com/api/charts/spotify?date=2018-11-01&country_code=US&interval=daily&type=regional
+
+
+        //Allowed values for service: youtube, radio, shazam
+        if (cityCode != '') {
+            var cityParam = 'city/' + cityCode + '/'
+        } else { var cityParam = 'city/*/' };
+        if (service != '') {
+            var serviceParam = service + '/'
+        } else { var serviceParam = '' };
+
+        var topTenUrl = 'https://api.chartmetric.com/api/' + cityParam + serviceParam + 'top-tracks'
+        fetch(topTenUrl, {
+            // method: 'GET',
+            headers: {
+                // 'Authorization':  token ,
+                'Authorization': genToken,
+                'content-type': 'application/json',
+                // 'Cookie': 'connect.sid=s%3Ae3110c90-fb7a-11ec-a565-5785d2c2acdb.LrKo7YyeGXzDmsPEGIzDDHoV0qiXsSvKScfJooyX7p0',
+                // 'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
+                //  'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
+                //'scope': 'api',
+            },
+            //redirect: 'follow',
+            // 'url': document.location
+            //'Accept': 'application/json, text/plain',
+            //'Content-Type': 'application/json'
+
+            //s mode: "no-cors",
+        }).then(function (response) {
+            if (response.ok) {
+                console.log('test response OK:');
+                console.log(response);
+                return response.json();
+            }
+            console.log('test response !OK:');
+            console.log(response);
+            throw response;
+        }).then(function (data) {
+            console.log(data);
+            //testDiv.textContent = data;
+            window.cityStore = data;
+            makeDiv();
+        }).catch(function (error) {
+            console.warn(error);
+        })
+    };
+
+
+    function makeDiv() {
         for (i = 0; i < 10; i++) {
 
             newText +=
@@ -130,8 +173,8 @@ function getDataFromApi(){
 
         testDiv.innerHTML = newText;
     }
-       
-refreshAPI()
+
+    refreshAPI()
 </script>
 
 </html>
