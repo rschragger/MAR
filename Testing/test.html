@@ -24,94 +24,114 @@
 <script>
     var testDiv = document.getElementById('testHere');
 
-    var cityStore = JSON.parse(localStorage.getItem('cityData'));
-    var newText = "";
-    for (i = 0; i < 10; i++) {
+    //var cityStore = JSON.parse(localStorage.getItem('cityData'));
+    var cityStore = {};
+    var newText = '';
+    var genToken = '';
 
-        newText +=
-            (i + 1)
-            + ": " +
-            "<img src=" + cityStore.obj[i].image_url + " >"
-            +
-            '<b>' + cityStore.obj[i].name + ",</b> " + cityStore.obj[i].artist_names
-            +
-            "<br> ";
-    }
-
-    testDiv.innerHTML = newText;
-
-    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2OTIyNTc1NzQ0LCJpYXQiOjE2NTY5MjI1NzUsImV4cCI6MTY1NjkyNjE3NX0.d0e2wb9grhsddAQrkg-Qe3XpnZX16MOuLC_aJcfAo60";
-
-
-    /*  ---- This section is supposed to be the refresh token bit. Use curl supplied and get
-          //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
-          var refreshUrl = 'https://api.chartmetric.com/api/token';
-          var refToken = ""; //When we get this working, possibly put API  refresh tokenkey here
   
-          fetch(refreshUrl, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
+
+
+        //  ---- This section is supposed to be the refresh token bit. Use curl supplied and get
+        //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
+        var refreshUrl = 'https://api.chartmetric.com/api/token';
+        var refToken = "uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS"; //When we get this working, possibly put API  refresh tokenkey here
+function refreshAPI(){
+        fetch(refreshUrl, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
                 //  "Access-Control-Allow-Origin": document.location,
-              },
-              data: {
-                  "refreshtoken": refToken,
-              },
-              mode: 'no-cors',
-      
-          }).then(function (response) {
-              if (response.ok) {
-                  console.log('refresh response OK:');
-                  console.log(response.json());
-                  return response.json();
-              }
-              console.log('refresh response !OK:');
-                  console.log(response.json());
-      //        throw response;
-          }).then(function (data) {
-      
-              console.log(data);
-          }).catch(function (error) {
-              console.log(error);
-          });
-         // ----- End of refresh token ----- */
+            },
+            body: JSON.stringify({
+                refreshtoken: 'uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS'// refToken ,
+            })
+            //mode: 'no-cors',
+
+        }).then(function (response) {
+            // if (response.ok) {
+                // console.log('refresh response OK:');
+                // console.log(response.json());
+
+                return response.json();
+            // }else{
+            // console.log('refresh response !OK:');
+            // console.log(response.json());
+            //         throw response;}
+        }).then(function (data) {
+           console.log(data)
+            genToken = "Bearer " + data.token,
+            getDataFromApi()
+                ;
+        }).catch(function (error) {
+            console.log(error);
+        });}
+        // ----- End of refresh token ----- */
 
 
-    //learnt from https://gomakethings.com/api-authentication-with-vanilla-js/
-    var testUrl = 'https://api.chartmetric.com/api/city/7060/shazam/top-tracks'
-    var bearerToken = 'Bearer ' + token;
+        //learnt from https://gomakethings.com/api-authentication-with-vanilla-js/
+        var testUrl = 'https://api.chartmetric.com/api/city/7060/shazam/top-tracks'
 
-    // fetch(testUrl + "?Authorization=Bearer%20" + token, {
 
-    fetch(testUrl, {
-        //method: 'GET',
-        // 'Authorization': 'Bearer ' + token,
-        headers: {
-            // 'Authorization':  token ,
-            'Authorization': bearerToken,
-            //  'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
-            // 'Access-Control-Allow-Origin': "158.140.193.68",
+        // fetch(testUrl + "?Authorization=Bearer%20" + token, {
+        //curl -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2OTI1MzU1NzgxLCJpYXQiOjE2NTY5MjUzNTUsImV4cCI6MTY1NjkyODk1NX0.QSRaqH7qWbRHyP47YZ3UyOB71JDcHXB1Krjjjl9wVH8' https://api.chartmetric.com/api/city/7060/radio/top-tracks?limit=10
+
+
+        //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY2OTg2NiwidGltZXN0YW1wIjoxNjU2OTQwMDMyMTk2LCJpYXQiOjE2NTY5NDAwMzIsImV4cCI6MTY1Njk0MzYzMn0.ZKQg-zzM-1DGWHYgge8zDdBaEgKCBSoUM9NYA_za3_E";
+        //var bearerToken = 'Bearer ' + token;
+function getDataFromApi(){
+        fetch(testUrl, {
+            // method: 'GET',
+            headers:{
+                // 'Authorization':  token ,
+                'Authorization': genToken ,
+                'content-type': 'application/json',
+                // 'Cookie': 'connect.sid=s%3Ae3110c90-fb7a-11ec-a565-5785d2c2acdb.LrKo7YyeGXzDmsPEGIzDDHoV0qiXsSvKScfJooyX7p0',
+                // 'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
+                //  'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
+                //'scope': 'api',
+            },
+            //redirect: 'follow',
             // 'url': document.location
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        mode: "no-cors",
-    }).then(function (response) {
-        if (response.ok) {
-            console.log('test response OK:');
-            console.log(response);
-            return response.json();
-        }
-        console.log('test response !OK:');
-        console.log(response);
-        throw response;
-    }).then(function (data) {
-        console.log(data);
-        testDiv.textContent = data;
-    }).catch(function (error) {
-        console.warn(error);
-    });
+            //'Accept': 'application/json, text/plain',
+            //'Content-Type': 'application/json'
 
+            //s mode: "no-cors",
+        }).then(function (response) {
+            if (response.ok) {
+                console.log('test response OK:');
+                console.log(response);
+                return response.json();
+            }
+            console.log('test response !OK:');
+            console.log(response);
+            throw response;
+        }).then(function (data) {
+            console.log(data);
+            //testDiv.textContent = data;
+            window.cityStore = data ;
+            makeDiv();
+        }).catch(function (error) {
+            console.warn(error);
+        })};
+
+        function makeDiv() {
+        for (i = 0; i < 10; i++) {
+
+            newText +=
+                (i + 1)
+                + ": " +
+                "<img src=" + cityStore.obj[i].image_url + " >"
+                +
+                '<b>' + cityStore.obj[i].name + ",</b> " + cityStore.obj[i].artist_names
+                +
+                "<br> ";
+        }
+
+        testDiv.innerHTML = newText;
+    }
+       
+refreshAPI()
 </script>
 
 </html>
