@@ -9,50 +9,75 @@
 </head>
 
 <body>
-
+<div id="lyricsDiv"></div>
 </body>
 <script>
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-        //mode: 'no-cors',
-         Headers: {
-            //'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
-           // 'origin': 'http://127.0.0.1:5500',
-            //'Host': 'http://127.0.0.1:5500',
-            //'Accept': '*/*',
-           //'User-Agent': 'PostmanRuntime/7.29.0',
-            //'Accept-Encoding': 'gzip, deflate, br',
-       },
+    var apiKeyVal = '3bcb566ebc2f1080b4c3c07c9dd115f6';
+    var mmChart = {}
+var lyricsDiv = document.getElementById('lyricsDiv');
 
-    };
-
-    fetch("https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=5&country=us&apikey=3bcb566ebc2f1080b4c3c07c9dd115f6", requestOptions)
-        //    fetch("https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=5&country=it&f_has_lyrics=1&apikey=3bcb566ebc2f1080b4c3c07c9dd115f6", requestOptions)
-        // .then(response){
-        //     response.text()
-        // }
-        // .then(result){
-        //     console.log('A result')
-        //     console.log(result)
-        // } 
-        // .catch (error) { console.log('error', error) };
-        .then(function (response) {
-            if (response.ok) {
-                console.log('test response OK:');
+    // functions-------------------------
+    function musixmatchChart(countryCode, qty) {
+        thisURL = "https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=" + qty + "&country=" + countryCode + "&apikey=" + apiKeyVal;
+        fetch(thisURL, {
+            method: 'GET',
+            redirect: 'follow',
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    console.log('test response OK:');
+                    console.log(response);
+                    return response.json();
+                }
+                console.log('test response !OK:');
                 console.log(response);
-                return response.json();
-            }
-            console.log('test response !OK:');
-            console.log(response);
-            throw response;
-        }).then(function (data) {
-            console.log(data);
-            //  testDiv.textContent = data;
-        }).catch(function (error) {
-            console.log('ERROR!!!')
-            console.warn(error);
-        });
+                throw response;
+            }).then(function (data) {
+                console.log(data);
+                mmChart = data.message.body//.tracklist;
+                mmGetLyrics(mmChart.track_list[0].track.track_id)
+            }).catch(function (error) {
+                console.log('ERROR!!!')
+                console.warn(error);
+            });
+    }
+    musixmatchChart('AU', 10)
+
+
+
+    //Instruction at https://developer.musixmatch.com/documentation/api-reference/track-lyrics-get
+    //<script type="text/javascript" src="http://tracking.musixmatch.com/t1.0/AMa6hJCIEzn1v8RuOP">
+    //if not successful
+    //<img src="http://tracking.musixmatch.com/t1.0/AMa6hJCIEzn1v8RuXW">
+    //example track.lyrics.get?track_id=15953433
+
+    function mmGetLyrics(track_id) {
+        thisURL = "https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" + track_id + "&apikey=" + apiKeyVal;
+        fetch(thisURL, {
+            method: 'GET',
+            redirect: 'follow',
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    console.log('test response OK:');
+                    console.log(response);
+                    return response.json();
+                }
+                console.log('test response !OK:');
+                console.log(response);
+                throw response;
+            }).then(function (data) {
+                console.log(data);
+                mmLyrics = data;
+                lyricsDiv.textContent=mmLyrics.message.body.lyrics.lyrics_body ;
+            }).catch(function (error) {
+                console.log('ERROR!!!')
+                console.warn(error);
+            });
+    }
+    // mmGetLyrics(mmChart.track_list[0].track.track_id)
+              // console.log('Result: '+ mmChart.track_list[0].track.track_name)
+
 </script>
 
 </html>
