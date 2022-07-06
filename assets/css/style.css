@@ -1,0 +1,113 @@
+body {
+  animation: animate-body 1600ms 200ms backwards;
+}
+@keyframes animate-body {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.add-favourite-action:hover {
+  color: rgb(231, 116, 116);
+  transition: all 400ms ease;
+}
+
+.active-favourite-action {
+  color: red;
+  animation: heart-scaling 500ms ease-in-out forwards;
+}
+
+.remove-action:hover {
+  transform: scale(1.2);
+  color: red;
+  transition: all 350ms ease;
+}
+
+@keyframes heart-scaling {
+  0% {
+    transform: scale(1);
+    color: red;
+  }
+  25% {
+    transform: scale(1.4);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+    color: red;
+  }
+}
+
+.heading {
+  line-height: 64px;
+  margin: 0;
+}
+
+#nav {
+  top: -64px;
+}
+
+.search-inpute {
+  color: white;
+}
+
+.favorite-title i {
+  font-size: 20px;
+}
+
+.top-list-item p {
+  margin: 0;
+}
+
+.top-list-item-header > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-list-item-header:hover {
+  background-color: #f8f8f8;
+  transform: scale(1.1);
+  transition: all 350ms ease;
+}
+
+.collapsible-header:hover {
+  background-color: #f8f8f8;
+}
+
+.top-list-item-header a {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+}
+
+.top-number {
+  margin-right: 8px;
+}
+
+.top-list-item-title-box {
+  margin-left: 16px;
+  width: 100%;
+}
+
+.description {
+  overflow: auto;
+  max-height: 300px;
+  overflow-wrap: break-word;
+}
+
+iframe {
+  width: 100%;
+}
