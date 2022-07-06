@@ -1,3 +1,4 @@
+
 // Declaring variables
 var videoLinks = [];
 var numberOfvideos = 0;
@@ -160,3 +161,12 @@ $(document).ready(function () {
     $("#favourites").append(getFavouriteListElement(item.snippet.title, index));
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, {
+      direction: 'left'
+    });
+  });
+     
+
