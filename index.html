@@ -1,94 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Header Open -->
+    <!-- Nav Manu Open -->
+    <ul id="nav" class="dropdown-content">
+      <li><a href="#!">one</a></li>
+      <li><a href="#!">two</a></li>
+      <li class="divider"></li>
+      <li><a href="#!">three</a></li>
+    </ul>
+    <!-- Nav Manu Close -->
+    <nav>
+      <div class="nav-wrapper">
+        <h1 class="heading brand-logo center">Heading</h1>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-  <link rel="stylesheet" href="./assets/css/style.css" />
-</head>
+        <ul class="right">
+          <li>
+            <a class="right dropdown-trigger" href="#!" data-target="nav">
+              Nav and Prefs
+              <i class="material-icons right"> arrow_drop_down </i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Header Close -->
 
-<body>
-  <!-- Header Open -->
-  <!-- Nav Manu Open -->
-  <ul id="nav" class="dropdown-content">
-    <li><a href="#!">one</a></li>
-    <li><a href="#!">two</a></li>
-    <li class="divider"></li>
-    <li><a href="#!">three</a></li>
-  </ul>
-  <!-- Nav Manu Close -->
-  <nav>
-    <div class="nav-wrapper">
-      <h1 class="heading brand-logo center">Heading</h1>
-
-      <ul class="right">
-        <li>
-          <a class="right dropdown-trigger" href="#!" data-target="nav">
-            Nav and Prefs
-            <i class="material-icons right"> arrow_drop_down </i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <!-- Header Close -->
-
-  <!-- Favourites Open -->
-  <div class="row">
-    <section class="col s3">
-      <div class="card-panel teal">
-        <div class="row">
-          <!-- Search Section Open-->
-          <button class="col s12 btn waves-effect waves-light" type="submit" name="action">
+    <!-- Favourites Open -->
+    <div class="row">
+      <section class="col s3">
+        <div class="card-panel teal">
+          <div class="row">
+            
+            <div class="search-section">
+              
+              <!-- Search Section Open-->
+            <button
+            class="col s12 btn waves-effect waves-light"
+            type="submit"
+            name="action"
+          >
             Search
           </button>
 
           <div class="input-field col s12">
-            <input placeholder="Search Box" type="text" class="search-inpute validate" />
+            <input
+              placeholder="Search Box"
+              type="text"
+              class="search-inpute validate"
+            />
           </div>
           <!-- Search Section Close-->
 
-          <h5 class="col s12 white-text center favorite-title">
-            Favourites
-            <i class="material-icons">favorite</i>
-          </h5>
+            </div>
 
-          <div class="col s12 items">
-            <ul id="favourites" class="collection">
-              <!-- Favourites list -->
+            <h5 class="col s12 white-text center favorite-title">
+              Favourites
+              <i class="material-icons">favorite</i>
+            </h5>
+
+            <div class="col s12 items">
+              <ul id="favourites" class="collection">
+                <!-- Favourites list -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Favourites OpeClosen -->
+
+      <!-- Top 10 Section Start -->
+      <section class="col s4">
+        <div class="card-panel teal">
+          <div class="row">
+            <ul id="top-list-container" class="collapsible collection">
+              <!-- Top 10 list -->
             </ul>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- Favourites OpeClosen -->
+      </section>
+      <!-- Top 10 Section Close -->
 
-    <!-- Top 10 Section Start -->
-    <section class="col s4">
-      <div class="card-panel teal">
-        <div class="row">
-          <ul id="top-list-container" class="collapsible collection">
-            <!-- Top 10 list -->
-          </ul>
+      <div class="col s5">
+        <div class="card-panel teal">
+          <div class="video-container">
+            <iframe
+              id="player"
+              type="text/html"
+              width="720"
+              height="405"
+              src=""
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <span id="description" class="white-text description"> </span>
         </div>
-      </div>
-    </section>
-    <!-- Top 10 Section Close -->
-
-    <div class="col s5">
-      <div class="card-panel teal">
-        <div class="video-container">
-          <iframe id="player" type="text/html" width="720" height="405" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <span id="description" class="white-text description"> </span>
       </div>
     </div>
-  </div>
 
   <!-- Modal Structure -->
   <div id="modal1" class="modal">
@@ -101,40 +126,11 @@
     </div>
   </div>
 
-  <script src="https://apis.google.com/js/api.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="./assets/js/script.js"></script>
-</body>
-<!-- <script src="./assets/js/script.js"></script> -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+  </body>
 
+</body>
 </html>
-
-<!-- ======= 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-<link rel="stylesheet" href="./assets/css/style.css">
-</head>
-
-<body>
-  <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo center">Logo</a>
-      <ul class="left hide-on-med-and-down">
-        <li><a href="#">Sass</a></li>
-        <li><a href="#">Components</a></li>
-        <li class="active"><a href="#">JavaScript</a></li>
-      </ul>
-    </div>
-  </nav>
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="./assets/js/script.js"></script>
-</body>
-
-</html>-->

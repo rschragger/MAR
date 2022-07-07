@@ -111,3 +111,7 @@ body {
 iframe {
   width: 100%;
 }
+
+.search-section {
+  display: none;
+}
