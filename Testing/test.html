@@ -19,17 +19,16 @@
     <div id="testHere"></div>
 
 </body>
-<!-- <script src="../Testing/PlaylistJSONdata.js"></script> -->
-<!-- <script src="../Testing/CityJSONdata.js"></script> -->
+
+
+<!-- moment JS  -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
 <script>
     var testDiv = document.getElementById('testHere');
 
-    //var cityStore = JSON.parse(localStorage.getItem('cityData'));
     var cityStore = {};
     var newText = '';
     var genToken = '';
-
-
 
 
     //  ---- This section is the refresh token bit. Use curl supplied and get
@@ -50,43 +49,53 @@
         }).then(function (data) {
             console.log(data)
             genToken = "Bearer " + data.token,
-                getTopTenApi('', 'shazam'); //'7060','shazam'
+                getTopTenApi('shazam', 'AU'); //'7060','shazam'
         }).catch(function (error) {
             console.log(error);
         });
     }
     // ----- End of refresh token ----- */
 
-    function getTopTenApiOrig(cityCode, service) {
-        //Allowed values for service: youtube, radio, shazam
-        if (cityCode != '') {
-            var cityParam = 'city/' + cityCode + '/'
-        } else { var cityParam = 'city/*/' };
-        if (service != '') {
-            var serviceParam = service + '/'
-        } else { var serviceParam = '' };
 
-        var topTenUrl = 'https://api.chartmetric.com/api/' + cityParam + serviceParam + 'top-tracks'
+    function getTopTenApi(service, countryCode) {
+        // Shazam // https://api.chartmetric.com/api/charts/shazam?date=2020-09-01&country_code=AU&city=Melbourne
+        // Spotify // https://api.chartmetric.com/api/charts/spotify?date=2018-11-01&country_code=US&interval=daily&type=regional
+        //sound cloud //https://api.chartmetric.com/api/charts/soundcloud?date=2019-02-01&country_code=AU&genre=all-music&kind=trending
+        // ****Youtube *** not working// https://api.chartmetric.com/api/charts/youtube/tracks?date=2020-02-06&country_code=us&offset=0
+
+        var topTenUrl = '';
+        var baseUrl = 'https://api.chartmetric.com/api/charts/';
+        var useDate = moment().subtract(8, 'days').format('YYYY-MM-DD'); //All services can have a lag of up to a week before publishing data
+        countryCode = 'AU'; //comment this out if searchable
+        // var city - not necessary
+        var interval = 'daily'; //spotify setting - can change later
+        var typeArea = 'regional'; //spotify setting - can change later
+
+        if (service == 'shazam') {
+            topTenUrl = baseUrl + service + '?date=' + useDate + '&country_code='
+                + countryCode
+        } else if (service == 'soundcloud') {
+            topTenUrl = baseUrl + service + '?date=' + useDate + '&country_code='
+                + countryCode +'&genre=all-music&kind=trending'
+        } else if (service == 'spotify') {
+            topTenUrl = baseUrl + service + '?date=' + useDate + '&country_code='
+                + countryCode + '&interval=' + interval + '&type=' + typeArea
+        }
+        //youtube service not working for newer dates
+        else if (service == 'youtube') {
+            topTenUrl = baseUrl + service + '/tracks?date=' + useDate + '&country_code='
+                + countryCode
+        }
+
         fetch(topTenUrl, {
             // method: 'GET',
             headers: {
-                // 'Authorization':  token ,
                 'Authorization': genToken,
-                'content-type': 'application/json',
-                // 'Cookie': 'connect.sid=s%3Ae3110c90-fb7a-11ec-a565-5785d2c2acdb.LrKo7YyeGXzDmsPEGIzDDHoV0qiXsSvKScfJooyX7p0',
-                // 'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
-                //  'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
-                //'scope': 'api',
+                'content-type': 'application/json',             
             },
-            //redirect: 'follow',
-            // 'url': document.location
-            //'Accept': 'application/json, text/plain',
-            //'Content-Type': 'application/json'
-
-            //s mode: "no-cors",
         }).then(function (response) {
             if (response.ok) {
-                console.log('test response OK:');
+                console.log(service + ' test response OK:');
                 console.log(response);
                 return response.json();
             }
@@ -96,61 +105,7 @@
         }).then(function (data) {
             console.log(data);
             //testDiv.textContent = data;
-            window.cityStore = data;
-            makeDiv();
-        }).catch(function (error) {
-            console.warn(error);
-        })
-    };
-
-    function getTopTenApi(service, countryCode, cityCode) {
-        // Shazam
-        // https://api.chartmetric.com/api/charts/shazam?date=2020-09-01&country_code=AU&city=Melbourne
-        // Youtube
-        // https://api.chartmetric.com/api/charts/youtube/tracks?date=2020-02-06&country_code=us&offset=0
-        // Spotify
-        // https://api.chartmetric.com/api/charts/spotify?date=2018-11-01&country_code=US&interval=daily&type=regional
-
-
-        //Allowed values for service: youtube, radio, shazam
-        if (cityCode != '') {
-            var cityParam = 'city/' + cityCode + '/'
-        } else { var cityParam = 'city/*/' };
-        if (service != '') {
-            var serviceParam = service + '/'
-        } else { var serviceParam = '' };
-
-        var topTenUrl = 'https://api.chartmetric.com/api/' + cityParam + serviceParam + 'top-tracks'
-        fetch(topTenUrl, {
-            // method: 'GET',
-            headers: {
-                // 'Authorization':  token ,
-                'Authorization': genToken,
-                'content-type': 'application/json',
-                // 'Cookie': 'connect.sid=s%3Ae3110c90-fb7a-11ec-a565-5785d2c2acdb.LrKo7YyeGXzDmsPEGIzDDHoV0qiXsSvKScfJooyX7p0',
-                // 'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
-                //  'Access-Control-Allow-Origin': 'https://api.chartmetric.com',
-                //'scope': 'api',
-            },
-            //redirect: 'follow',
-            // 'url': document.location
-            //'Accept': 'application/json, text/plain',
-            //'Content-Type': 'application/json'
-
-            //s mode: "no-cors",
-        }).then(function (response) {
-            if (response.ok) {
-                console.log('test response OK:');
-                console.log(response);
-                return response.json();
-            }
-            console.log('test response !OK:');
-            console.log(response);
-            throw response;
-        }).then(function (data) {
-            console.log(data);
-            //testDiv.textContent = data;
-            window.cityStore = data;
+            cityStore = data;
             makeDiv();
         }).catch(function (error) {
             console.warn(error);
@@ -159,14 +114,15 @@
 
 
     function makeDiv() {
+        newText = "";
         for (i = 0; i < 10; i++) {
 
             newText +=
                 (i + 1)
                 + ": " +
-                "<img src=" + cityStore.obj[i].image_url + " >"
+                "<img src=" + cityStore.obj.data[i].image_url + " >"
                 +
-                '<b>' + cityStore.obj[i].name + ",</b> " + cityStore.obj[i].artist_names
+                '<b>' + cityStore.obj.data[i].name + ",</b> " + cityStore.obj.data[i].artist_names
                 +
                 "<br> ";
         }
