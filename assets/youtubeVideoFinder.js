@@ -8,7 +8,7 @@ var numberOfvideos = 0;
 function keyTry(myApiKey,searchTag,searchLimit){
   
   var url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults='+searchLimit+'&q=surfing&key='+myApiKey +'&type=video&videoEmbeddable=true&part=snippet&q='+searchTag
-  console.log(url);
+//   console.log(url);
   fetch(url)
     .then(function (response) {
       return response.json();
@@ -24,7 +24,8 @@ function keyTry(myApiKey,searchTag,searchLimit){
       }
     })
     console.log(videoLinks);
-    return videoLinks;
+    // return videoLinks;
   }
 //key AIzaSyCBymAbMHWPWS-_srOFFs7exEMSYX_hiIg
-console.log(keyTry('AIzaSyCrkH7QvGEJRmflgGC8L4kSuQx0bEOMPVA',"higher love",1));
+// console.log(keyTry('AIzaSyDDOD_xBCrxHtMiXoukG8h94OUdehe97N0',"higher love",1));
+keyTry('AIzaSyDDOD_xBCrxHtMiXoukG8h94OUdehe97N0',"higher love",1);
