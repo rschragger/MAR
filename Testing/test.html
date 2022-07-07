@@ -68,8 +68,8 @@
         var useDate = moment().subtract(8, 'days').format('YYYY-MM-DD'); //All services can have a lag of up to a week before publishing data
         countryCode = 'AU'; //comment this out if searchable
         // var city - not necessary
-        var interval = 'daily'; //spotify setting - can change later
-        var typeArea = 'regional'; //spotify setting - can change later
+        var interval = 'daily'; //spotify setting - can improve later
+        var typeArea = 'regional'; //spotify setting - can improve later
 
         if (service == 'shazam') {
             topTenUrl = baseUrl + service + '?date=' + useDate + '&country_code='
@@ -81,14 +81,13 @@
             topTenUrl = baseUrl + service + '?date=' + useDate + '&country_code='
                 + countryCode + '&interval=' + interval + '&type=' + typeArea
         }
-        //youtube service not working for newer dates
+        /*//youtube service not working for newer dates *********
         else if (service == 'youtube') {
             topTenUrl = baseUrl + service + '/tracks?date=' + useDate + '&country_code='
                 + countryCode
-        }
+        }*/
 
         fetch(topTenUrl, {
-            // method: 'GET',
             headers: {
                 'Authorization': genToken,
                 'content-type': 'application/json',             
@@ -104,7 +103,6 @@
             throw response;
         }).then(function (data) {
             console.log(data);
-            //testDiv.textContent = data;
             cityStore = data;
             makeDiv();
         }).catch(function (error) {
