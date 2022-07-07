@@ -2,7 +2,8 @@ var videoLinks = [];
 var numberOfvideos = 0;
 
 //this function will get the youtube video links matching the search tag and the user can limit the 
-//number of search results he wants to get. Each video link is stored in the videolinks array
+//number of search results he wants to get. It only gets video links that are embeddable and then
+//store in the videolinks array.
 //NB: api key has to be provided.
 function keyTry(myApiKey,searchTag,searchLimit){
   
@@ -17,7 +18,7 @@ function keyTry(myApiKey,searchTag,searchLimit){
       numberOfvideos = data["items"].length;  
 
       //gets the id of the videos then concatinate them with the youtube prefix https://www.youtube.com/watch?v= 
-      //to get a full link then insert the full link into videoLinks array.
+      //to get a full link then insert the full link into videoLinks array. 
       for (var index = 0; index < numberOfvideos; index++) {
         videoLinks[index]= "https://www.youtube.com/watch?v="+data["items"][index]["id"]["videoId"];
       }
@@ -26,4 +27,4 @@ function keyTry(myApiKey,searchTag,searchLimit){
     return videoLinks;
   }
 //key AIzaSyCBymAbMHWPWS-_srOFFs7exEMSYX_hiIg
-    keyTry('AIzaSyCrkH7QvGEJRmflgGC8L4kSuQx0bEOMPVA',"higher love",1);
+console.log(keyTry('AIzaSyCrkH7QvGEJRmflgGC8L4kSuQx0bEOMPVA',"higher love",1));
