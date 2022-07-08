@@ -2,19 +2,21 @@ body {
   animation: animate-body 1600ms 200ms backwards;
   background-image: url("../images/AdobeStock_262833355_Preview.jpeg");
   background-repeat: no-repeat;
-  background-origin: content-box;
+  /* background-origin: content-box; */
   background-attachment: fixed;
   background-size: cover;
-  background-position:right;
+  background-position: right;
 }
 
 @keyframes animate-body {
   0% {
     transform: scale(0);
   }
+
   80% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
@@ -41,15 +43,19 @@ body {
     transform: scale(1);
     color: red;
   }
+
   25% {
     transform: scale(1.4);
   }
+
   50% {
     transform: scale(1);
   }
+
   75% {
     transform: scale(1.4);
   }
+
   100% {
     transform: scale(1);
     color: red;
@@ -65,8 +71,12 @@ body {
   top: -64px;
 }
 
-.search-inpute {
+.search-input {
   color: white;
+}
+
+.dropdown-content li {
+  color: black;
 }
 
 .favorite-title i {
@@ -77,7 +87,7 @@ body {
   margin: 0;
 }
 
-.top-list-item-header > div {
+.top-list-item-header>div {
   width: 100%;
   display: flex;
   justify-content: space-between;
