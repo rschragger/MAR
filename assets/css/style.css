@@ -209,7 +209,7 @@ i:hover {
 
 .footer-logo-popper {
     position: absolute;
-    right: 0;
+    right: 50px;
     top: 30px;
     font-weight: 700;
     opacity: 0;
