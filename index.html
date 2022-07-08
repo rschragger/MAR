@@ -1,119 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-  </head>
-  <body>
-    <!-- Header Open -->
-    <!-- Nav Manu Open -->
-    <ul id="nav" class="dropdown-content">
-      <li><a href="#!">one</a></li>
-      <li><a href="#!">two</a></li>
-      <li class="divider"></li>
-      <li><a href="#!">three</a></li>
-    </ul>
-    <!-- Nav Manu Close -->
-    <nav>
-      <div class="nav-wrapper">
-        <h1 class="heading brand-logo center">Heading</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
 
-        <ul class="right">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+
+</head>
+
+<body>
+  <!-- Header Open -->
+  <!-- Nav Menu Open -->
+  <ul id="nav" class="dropdown-content">
+    <li><a href="#!Services">spotify</a></li>
+    <li><a href="#!Services">shazam</a></li>
+    <!-- <li class="divider"></li> -->
+    <li><a href="#!Services">soundcloud</a></li>
+  </ul>
+  <!-- Nav Menu Close -->
+  <nav class="nav-wrapper black col s12">
+    <div>
+      <div class="heading col s12 m10 l11 center">
+        <h3 >Top 10 Music & Lyrics</h3>
+      </div>
+      <div class="col s12 m2 l1 right ">
+        <ul >
           <li>
-            <a class="right dropdown-trigger" href="#!" data-target="nav">
-              Nav and Prefs
-              <i class="material-icons right"> arrow_drop_down </i>
-            </a>
+          <a class="right dropdown-trigger" href="#!Services" data-target="nav">
+            Services
+            <i class="material-icons right"> arrow_drop_down </i>
+          </a>
           </li>
         </ul>
       </div>
-    </nav>
-    <!-- Header Close -->
+    </div>
+  </nav>
+  <!-- Header Close -->
 
-    <!-- Favourites Open -->
-    <div class="row">
-      <section class="col s3">
-        <div class="card-panel teal">
-          <div class="row">
-            
-            <div class="search-section">
-              
-              <!-- Search Section Open-->
-            <button
-            class="col s12 btn waves-effect waves-light"
-            type="submit"
-            name="action"
-          >
-            Search
-          </button>
+  <!-- Favourites Open -->
+  <div class="row">
+    <section class="col s12 m3">
+      <div class="card-panel black">
+        <div class="row">
 
-          <div class="input-field col s12">
-            <input
-              placeholder="Search Box"
-              type="text"
-              class="search-inpute validate"
-            />
-          </div>
-          <!-- Search Section Close-->
+          <div class="search-section">
 
+            <!-- Search Section Open-->
+            <button class="col s12 btn waves-effect waves-light" type="submit" name="action">
+              Search
+            </button>
+
+            <div class="input-field col s12">
+              <input placeholder="Search Box" type="text" class="search-inpute validate" />
             </div>
+            <!-- Search Section Close-->
 
-            <h5 class="col s12 white-text center favorite-title">
-              Favourites
-              <i class="material-icons">favorite</i>
-            </h5>
-
-            <div class="col s12 items">
-              <ul id="favourites" class="collection">
-                <!-- Favourites list -->
-              </ul>
-            </div>
           </div>
-        </div>
-      </section>
-      <!-- Favourites OpeClosen -->
 
-      <!-- Top 10 Section Start -->
-      <section class="col s4">
-        <div class="card-panel teal">
-          <div class="row">
-            <ul id="top-list-container" class="collapsible collection">
-              <!-- Top 10 list -->
+          <h5 class="col s12 white-text center favorite-title">
+            Favourites
+            <i class="material-icons">favorite</i>
+          </h5>
+
+          <div class="col s12 items">
+            <ul id="favourites" class="collection">
+              <!-- Favourites list -->
             </ul>
           </div>
         </div>
-      </section>
-      <!-- Top 10 Section Close -->
+      </div>
+    </section>
+    <!-- Favourites OpeClosen -->
 
-      <div class="col s5">
-        <div class="card-panel teal">
-          <div class="video-container">
-            <iframe
-              id="player"
-              type="text/html"
-              width="720"
-              height="405"
-              src=""
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
-          </div>
-          <span id="description" class="white-text description"> </span>
+    <!-- Top 10 Section Start -->
+    <section class="col s12 m4">
+      <div class="card-panel black">
+        <div class="row">
+          <ul id="top-list-container" class="collapsible collection">
+            <!-- Top 10 list -->
+          </ul>
         </div>
       </div>
+    </section>
+    <!-- Top 10 Section Close -->
+
+    <div class="col s12 m5">
+      <div class="card-panel black">
+        <div class="video-container">
+          <iframe id="player" type="text/html" width="720" height="405" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <span id="description" class="white-text description"> </span>
+      </div>
     </div>
+  </div>
 
   <!-- Modal Structure -->
   <div id="modal1" class="modal">
@@ -125,12 +109,14 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="/assets/script.js"></script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="./assets/script.js"></script>
+</body>
 
 </body>
+
 </html>
