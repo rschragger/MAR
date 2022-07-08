@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+/*INFO***********
+use function
+getTopTenApi(service, countryCode)
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href=""> -->
-    <title>Testing Document</title>
-    <style>
-        img {
-            width: 100%;
-            max-width: 50px;
-        }
-    </style>
-</head>
+returns: cityStore (an object)
+e.g. cityStore.obj.data[i].name
 
-<body>
-    <div id="testHere"></div>
-
-</body>
-
-
-<!-- moment JS  -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-<script>
+************/
+//<!-- moment JS  -->
+//<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     var testDiv = document.getElementById('testHere');
 
     var cityStore = {};
     var newText = '';
     var genToken = '';
 
+    function getTopTenApi(service, countryCode) {
+        refreshAPI()
 
     //  ---- This section is the refresh token bit. Use curl supplied and get
     //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
@@ -37,7 +23,7 @@
     var refToken = "uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS"; //When we get this working, possibly hide  refresh token key 
     function refreshAPI() {
         fetch(refreshUrl, {
-            method: 'POST',
+            method: "POST",
             headers: {
                 "content-type": "application/json",
             },
@@ -49,7 +35,7 @@
         }).then(function (data) {
             console.log(data)
             genToken = "Bearer " + data.token,
-                getTopTenApi('shazam', 'AU'); //'7060','shazam'
+                getTopTenApi(service, countryCode ); //'7060','shazam'
         }).catch(function (error) {
             console.log(error);
         });
@@ -57,7 +43,7 @@
     // ----- End of refresh token ----- */
 
 
-    function getTopTenApi(service, countryCode) {
+    
         // Shazam // https://api.chartmetric.com/api/charts/shazam?date=2020-09-01&country_code=AU&city=Melbourne
         // Spotify // https://api.chartmetric.com/api/charts/spotify?date=2018-11-01&country_code=US&interval=daily&type=regional
         //sound cloud //https://api.chartmetric.com/api/charts/soundcloud?date=2019-02-01&country_code=AU&genre=all-music&kind=trending
@@ -111,24 +97,20 @@
     };
 
 
-    function makeDiv() {
-        newText = "";
-        for (i = 0; i < 10; i++) {
+    // function makeDiv() {
+    //     newText = "";
+    //     for (i = 0; i < 10; i++) {
 
-            newText +=
-                (i + 1)
-                + ": " +
-                "<img src=" + cityStore.obj.data[i].image_url + " >"
-                +
-                '<b>' + cityStore.obj.data[i].name + ",</b> " + cityStore.obj.data[i].artist_names
-                +
-                "<br> ";
-        }
+    //         newText +=
+    //             (i + 1)
+    //             + ": " +
+    //             "<img src=" + cityStore.obj.data[i].image_url + " >"
+    //             +
+    //             '<b>' + cityStore.obj.data[i].name + ",</b> " + cityStore.obj.data[i].artist_names
+    //             +
+    //             "<br> ";
+    //     }
 
-        testDiv.innerHTML = newText;
-    }
+    //     testDiv.innerHTML = newText;
+    // }
 
-    refreshAPI()
-</script>
-
-</html>
