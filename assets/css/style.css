@@ -1,6 +1,13 @@
 body {
   animation: animate-body 1600ms 200ms backwards;
+  background-image: url("../images/AdobeStock_262833355_Preview.jpeg");
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position:right;
 }
+
 @keyframes animate-body {
   0% {
     transform: scale(0);
