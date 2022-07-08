@@ -175,10 +175,6 @@ i:hover {
   left: 0;
 }
 
-/* footer {
-    background-color: #242424;
-} */
-
 .footer-row {
     display: flex;
     flex-direction: column;
