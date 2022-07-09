@@ -13,15 +13,18 @@ e.g. cityStore.obj.data[i].name
     var cityStore = {};
     var newText = '';
     var genToken = '';
+    var refreshUrl = 'https://api.chartmetric.com/api/token';
+    var refToken = "uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS"; //When we get this working, possibly hide  refresh token key 
+
 
     function getTopTenApi(service, countryCode) {
-        refreshAPI()
 
     //  ---- This section is the refresh token bit. Use curl supplied and get
     //curl -d "{\"refreshtoken\":\"REFRESH_TOKEN\"}" -H "Content-Type: application/json" -X POST https://api.chartmetric.com/api/token
-    var refreshUrl = 'https://api.chartmetric.com/api/token';
-    var refToken = "uC6sog7Tyf4sakW06bwLoWQmQTwugmzgINywzA0WD0MQQvfRZsK5ZhPssGsBBdoS"; //When we get this working, possibly hide  refresh token key 
-    function refreshAPI() {
+    
+    
+
+    function refreshCmApiToken() {
         fetch(refreshUrl, {
             method: "POST",
             headers: {
@@ -35,15 +38,17 @@ e.g. cityStore.obj.data[i].name
         }).then(function (data) {
             console.log(data)
             genToken = "Bearer " + data.token,
-                getTopTenApi(service, countryCode ); //'7060','shazam'
+                //getTopTenApi(service, countryCode ); //'7060','shazam'
+                getApiWithToken();
+                
         }).catch(function (error) {
             console.log(error);
         });
     }
     // ----- End of refresh token ----- */
 
-
-    
+// ----- Start of calling API -----
+function getApiWithToken(){
         // Shazam // https://api.chartmetric.com/api/charts/shazam?date=2020-09-01&country_code=AU&city=Melbourne
         // Spotify // https://api.chartmetric.com/api/charts/spotify?date=2018-11-01&country_code=US&interval=daily&type=regional
         //sound cloud //https://api.chartmetric.com/api/charts/soundcloud?date=2019-02-01&country_code=AU&genre=all-music&kind=trending
@@ -94,23 +99,15 @@ e.g. cityStore.obj.data[i].name
         }).catch(function (error) {
             console.warn(error);
         })
-    };
+   } ;
+   refreshCmApiToken()
+    }
+
+//Example for output
 
 
-    // function makeDiv() {
-    //     newText = "";
-    //     for (i = 0; i < 10; i++) {
-
-    //         newText +=
-    //             (i + 1)
-    //             + ": " +
     //             "<img src=" + cityStore.obj.data[i].image_url + " >"
     //             +
     //             '<b>' + cityStore.obj.data[i].name + ",</b> " + cityStore.obj.data[i].artist_names
-    //             +
-    //             "<br> ";
-    //     }
-
-    //     testDiv.innerHTML = newText;
-    // }
+    
 

@@ -82,27 +82,31 @@
     <!-- Favourites Close -->
 
     <!-- Top 10 Section Start -->
-    <section class="col s12 m6 l5">
-      <div class="transparent">
+    <section class="col s12 m6 l5 transparent">
+      <!-- <div class="transparent"> -->
         <!-- <div class="row"> -->
         <ul id="top-list-container" class="collapsible collection blue">
           <!-- Top 10 list -->
         </ul>
         <!-- </div> -->
-      </div>
+      <!-- </div> -->
     </section>
     <!-- Top 10 Section Close -->
 
-
-    <div class="col s12 m6 l4">
+<!-- Presentation Box  -->
+    <div id="presentation-box" class="col s12 m6 l4">
       <div class="transparent">
         <div class="video-container">
           <iframe id="player" type="text/html" width="720" height="405" src="" frameborder="0" allowfullscreen></iframe>
         </div>
-        <span id="description" class="white-text description"> </span>
+        <div id="description" class="white-text black p2 description"> </div>
+        <div id="lyrics" class="white-text black p2 lyrics"></div>
       </div>
     </div>
   </div>
+  <!-- End Presentation Box  -->
+
+
   <!-- End Main Panel  -->
 
   <!-- Modal Structure -->
@@ -163,11 +167,16 @@
 
   </footer>
 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./assets/musixMatchLyricsFinder.js"></script>
   <script src="./assets/youtubeVideoFinder.js"></script>
+  
+  <script src="./assets/js/clickOnService.js"></script>
+  <script src="./assets/js/getTopTenApi.js"></script>
+
   <script src="./assets/js/script.js"></script>
 
 </body>
