@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   animation: animate-body 1600ms 200ms backwards;
   background-image: url("../images/AdobeStock_262833355_Preview.jpeg");
