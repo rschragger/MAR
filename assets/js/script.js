@@ -3,6 +3,8 @@
 var videoLinks = [];
 var numberOfvideos = 0;
 var apiKey = "AIzaSyDP8yc-Z0ZxV-aou3CkADOCBBlob-d79J0";
+
+
 var items;
 
 // Getting favourites from local storage and displaying into favourites section
@@ -156,6 +158,7 @@ function onRemoveFacourite(index) {
 // Making a fetch request to display top 10 videos
 var maxResult = 10;
 var url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${maxResult}&regionCode=AU&videoCategoryId=10&key=${apiKey}`;
+console.log(url);
 fetch(url)
   .then(function (response) {
     return response.json();
