@@ -2,7 +2,9 @@
 // Declaring variables
 var videoLinks = [];
 var numberOfvideos = 0;
-var apiKey = "AIzaSyDtjAYxFulvN-sCCv8R337QkwycEpAQhqc";
+var apiKey = "AIzaSyDP8yc-Z0ZxV-aou3CkADOCBBlob-d79J0";
+
+
 var items;
 
 // Getting favourites from local storage and displaying into favourites section
@@ -73,22 +75,57 @@ function getTopListElement(elementData, index, isActive) {
     "</a>" +
     "</div>" +
     "</div>" +
-    "<div class='collapsible-body white-text description'>" +
+    "<pre class='collapsible-body white-text description'>" +
     elementData.snippet.description +
-    "</div>" +
+    "</pre>" +
     "</li>"
   );
 }
 
 // Functions creating list elements end
 
+
+// Function to find the lyrics and display in the description if available
+
+function lyricsFinder(songName, youtubeDescription) {
+  var trackId = 'http://api.musixmatch.com/ws/1.1/track.search?q_track=' + songName + '&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66';
+  var idNumber;
+  
+  fetch(trackId)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      idNumber = data.message.body.track_list[0].track.track_id;
+      var myLink = 'http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + idNumber + '&apikey=976be22c1d2c0d79345b9f3c25a4da66';
+      fetch(myLink)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data.message.body.lyrics.lyrics_body);
+          $("#description").text(data.message.body.lyrics.lyrics_body);
+
+          
+        }).catch(function() {
+          $("#description").text(youtubeDescription);
+        })
+
+    }).catch(function() {
+      $("#description").text(youtubeDescription);
+    })
+    
+
+}
 // Function to display youtube window
+
 var currentElementIndex = null;
 function onClickTopItem(index) {
   if (currentElementIndex === null || currentElementIndex !== index) {
     currentElementIndex = index;
     var element = items[index];
-    $("#description").text(element.snippet.description);
+    lyricsFinder(element.snippet.title, element.snippet.description)
+    
     $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
   }
 }
@@ -134,6 +171,7 @@ fetch(url)
       var elementData = items[index];
       var listItem = getTopListElement(elementData, index, favourites[index]);
       $("#top-list-container").append(listItem);
+
     }
   });
 
@@ -162,13 +200,4 @@ $(document).ready(function () {
     $("#favourites").append(getFavouriteListElement(item.snippet.title, index));
   }
 });
-
-/*not sure this is supposed to be here
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    var instances = M.FloatingActionButton.init(elems, {
-      direction: 'left'
-    });
-  });
-     */
 
