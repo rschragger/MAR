@@ -51,9 +51,14 @@ function getFavouriteListElement(title, index) {
  //ALL THE SONGS. PLEASE TRY TO FIX THIS
 
 function getTopListElement(elementData, index, isActive,videoId) {
-  console.log(videoId);
-  var songName = songNameFinder(videoId);
+  let songName =  songNameFinder(videoId);
   console.log(songName);
+
+
+  lyricsStorer[index]= lyricsFinder(songName);
+  lyricsStorer[index]= videoId;
+   
+  // var songName = songNameFinder(videoId);
   lyricsStorer[videoId]= "";
   var activeClass = "";
   if (isActive) activeClass = " active-favourite-action";
@@ -176,10 +181,8 @@ function onRemoveFacourite(index) {
 // Making a fetch request to display top 10 videos
 var maxResult = 10;
 
-// var url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${maxResult}&regionCode=au&videoCategoryId=10&key=${apiKey}`;
 var url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${maxResult}&videoCategoryId=10&key=${apiKey}`;
 
-console.log("this is the url "+url);
 fetch(url)
   .then(function (response) {
     return response.json();
@@ -227,30 +230,19 @@ $(document).ready(function () {
 //THIS FUNCTION GETS NAME OF SONG THROUGH DOWNLOADING THE YOUTUBE PAGE OF THE SONG THEN 
 //SEARCHING FOR THE MUSIC TITLE  AND GET IT.
 
-function songNameFinder(youtubeVideoIdNumber){
-  var musicTitle ="";
-  var titleIndex = 0;
-  var length = 33;
-  var indexWoutLength = 0;
-var url = "https://www.youtube.com/watch?v="+ youtubeVideoIdNumber;
-fetch(url).then(function (response) {
-	// The API call was successful!
-	return response.text();
-}).then(function (html) {
-	// This is the HTML from our response as a text string
-  indexWoutLength = html.search('"defaultMetadata":{"simpleText":"');
-  
-}).then(function(){
-  titleIndex =   indexWoutLength + length;
-  console.log("title index "+titleIndex+"length "+ length);
-  var bigString = html.slice(titleIndex);
-  musicTitle = bigString.split("\"")[0];
-  
-    console.log(musicTitle);
-
+  async function songNameFinder(youtubeVideoIdNumber){
+  var url = "https://www.youtube.com/watch?v="+ youtubeVideoIdNumber;
+  const response =  await fetch(url).then(function (response) {
+      // The API call was successful!
+      return response.text();
+    }).then(function (html) {
+      // This is the HTML from our response as a text string
+      html.search('"defaultMetadata":{"simpleText":"');
+      var titleIndex =  html.search('"defaultMetadata":{"simpleText":"')  +'"defaultMetadata":{"simpleText":"'.length
+      var bigString = html.slice(titleIndex);
+      const myArray =  bigString.split("\"")[0];
+      return myArray;
+  })
+ return response;
   }
-)
 
-
-
-}
