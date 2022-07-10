@@ -7,7 +7,7 @@ navDropdown.addEventListener('click', function (event) {
     var thisButton = event.target;
     currentService = thisButton.textContent;
 
-    window.console.log(currentService);
+   // window.console.log(currentService);
 
     getTopTenApi(currentService, 'AU');
 
