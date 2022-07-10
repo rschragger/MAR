@@ -1,5 +1,8 @@
-//MINA FIRST CHANGE, I added lyricsStorer as an array which stores lyrics from 0 to 9 where 0 is
+//MINA FIRST CHANGE, I added lyricsStorer as an array which stores video ids from 0 to 9 where 0 is
 //the first song and 9 is the last song
+//@ Reeve Lyrics storer is where we store the the promises of the youtube videos names
+//then will need to put these names to get the lyricsFinder. This function should be
+//linked to the onclick function to display lyrics
 var lyricsStorer=[];
 // Declaring variables
 var videoLinks = [];
@@ -10,7 +13,7 @@ var apiKey = "AIzaSyDP8yc-Z0ZxV-aou3CkADOCBBlob-d79J0";
 var items;
 
 // Getting favourites from local storage and displaying into favourites section
-function getFavourites() {
+function getFavourites () {
   var favourites = localStorage.getItem("favourites");
   if (favourites) {
     return JSON.parse(favourites) || {};
@@ -24,7 +27,7 @@ function getFavouriteListElement(title, index) {
     "<li id='" +
     "favourite-item-" +
     index +
-    "' class='collection-item col m4 l12'>" +
+    "' class='collection-item row'>" +
     "<span class='title col s10'>" +
     title +
     "</span>" +
@@ -39,28 +42,14 @@ function getFavouriteListElement(title, index) {
   );
 }
 
- //MINA SECOND CHANGE:I added video id to the function so that it can take the video id of each video
- //and uses it to find the song name
- //NB youtube does not return the song name, so I made a specific function for that called
- //songNameFinder, it can be found below.
-
- //HERE IS THE PROBLEM:-
- //THAT songNameFinder FUNCTION SOMETIMES, IT IS NOT EXECUTED EVERYTIME 
- //WITH THE NEW VIDEO ID, SOMETIMES IT GETS EXECUTED TWICE WITH THE SAME ID
- //THATS WHY ALTHOUGH   console.log(videoId) GETS ALL IDS,   console.log(songName) DOES NOT GET
- //ALL THE SONGS. PLEASE TRY TO FIX THIS
-
-function getTopListElement(elementData, index, isActive,videoId) {
-  let songName =  songNameFinder(videoId);
-  console.log(songName);
 
 
-  lyricsStorer[index]= lyricsFinder(songName);
-  lyricsStorer[index]= videoId;
-   
-  // var songName = songNameFinder(videoId);
-  lyricsStorer[videoId]= "";
-  var activeClass = "";
+
+
+ function getTopListElement(elementData, index, isActive,videoId) {
+   lyricsStorer[index] = songNameFinder(videoId);
+ 
+   var activeClass = "";
   if (isActive) activeClass = " active-favourite-action";
   return (
     "<li class='top-list-item' onclick='" +
@@ -102,7 +91,7 @@ function getTopListElement(elementData, index, isActive,videoId) {
     "</pre>" +
     "</li>"
   );
-  
+ 
 }
 
 // Functions creating list elements end
@@ -110,35 +99,28 @@ function getTopListElement(elementData, index, isActive,videoId) {
 
 // Function to find the lyrics and display in the description if available
 
-function lyricsFinder(songName, youtubeDescription) {
-  $("#description").text('');
-  var trackId = 'https://api.musixmatch.com/ws/1.1/track.search?q_track=' + songName + '&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66';
+  async function lyricsFinder(songName) {
+
+  await songName;
+  
+  var myLyrics = "";
+  var trackId = 'http://api.musixmatch.com/ws/1.1/track.search?q_track=' + songName + '&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66';
   var idNumber;
-
-  fetch(trackId)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      idNumber = data.message.body.track_list[0].track.track_id;
-      var myLink = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + idNumber + '&apikey=976be22c1d2c0d79345b9f3c25a4da66';
-      fetch(myLink)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          console.log(data.message.body.lyrics.lyrics_body);
-          $("#description").text(data.message.body.lyrics.lyrics_body);
-
-
-        }).catch(function () {
-          $("#description").text(youtubeDescription);
-        })
-
-    }).catch(function () {
-      $("#description").text(youtubeDescription);
-    })
-
+  const response1 = await fetch(trackId);
+  const data1 = await response1.json();
+ 
+try{  idNumber = await data1.message.body.track_list[0].track.track_id;}
+catch{
+  myLyrics = "Lyrics not found";
+  return myLyrics ;
+}
+  var myLink = 'http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + idNumber + '&apikey=976be22c1d2c0d79345b9f3c25a4da66';
+  const response2 = await fetch(myLink);
+  const data2 = await response2.json();
+   myLyrics = data2.message.body.lyrics.lyrics_body;
+  return myLyrics;
+ 
+  
 
 }
 // Function to display youtube window
@@ -147,20 +129,10 @@ var currentElementIndex = null;
 function onClickTopItem(index) {
   if (currentElementIndex === null || currentElementIndex !== index) {
     currentElementIndex = index;
-    //need to allow for chartmetric or youtube data
-    if (currentService == 'youtube' || currentService == '') {//youtube
-      var element = items[index];
-      lyricsFinder(element.snippet.title, element.snippet.description)
-
-      $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
-    }
-    else { //chartmetric services
-      var element = cityStore.obj.data[index];
-      lyricsFinder(element.name, "Sorry, we don't seem to have lyrics yet for " + element.name + " by " + element.artist_names[0]);
-
-      $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
-
-    }
+    var element = items[index];
+    lyricsFinder(element.snippet.title, element.snippet.description)
+   
+    $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
   }
 }
 
@@ -177,7 +149,6 @@ function onAddFacourite(index) {
     $("#add-favourite-" + index).addClass("active-favourite-action");
   }
 }
-{/* <li id="favourite-item-0" class="collection-item col m4 l12"><span class="title col s10">周杰倫 Jay Chou【最偉大的作品 Greatest Works of Art】Official MV</span><a href="#!" class="secondary-content col s2 remove-action" onclick="onRemoveFacourite(0)"><i class="material-icons">clear</i></a></li> */ }
 
 // Deleting favourites from list
 function onRemoveFacourite(index) {
@@ -202,7 +173,6 @@ fetch(url)
   .then(function (data) {
     var favourites = getFavourites();
     items = data.items;
-    $("#top-list-container").innerHTML = ''; //reset old list to nothing
 
     for (var index = 0; index < items.length; index++) {
       var elementData = items[index];
@@ -210,6 +180,7 @@ fetch(url)
       //to find song name
       var listItem = getTopListElement(elementData, index, favourites[index],elementData.id);
       $("#top-list-container").append(listItem);
+
     }
   });
 
@@ -239,22 +210,20 @@ $(document).ready(function () {
   }
 });
 
-//THIS FUNCTION GETS NAME OF SONG THROUGH DOWNLOADING THE YOUTUBE PAGE OF THE SONG THEN 
+//THIS FUNCTION GETS NAME OF SONG THROUGH DOWNLOADING THE YOUTUBE PAGE OF THE SONG THEN
 //SEARCHING FOR THE MUSIC TITLE  AND GET IT.
 
-  async function songNameFinder(youtubeVideoIdNumber){
+async function songNameFinder(youtubeVideoIdNumber){
   var url = "https://www.youtube.com/watch?v="+ youtubeVideoIdNumber;
-  const response =  await fetch(url).then(function (response) {
-      // The API call was successful!
-      return response.text();
-    }).then(function (html) {
-      // This is the HTML from our response as a text string
-      html.search('"defaultMetadata":{"simpleText":"');
-      var titleIndex =  html.search('"defaultMetadata":{"simpleText":"')  +'"defaultMetadata":{"simpleText":"'.length
-      var bigString = html.slice(titleIndex);
-      const myArray =  bigString.split("\"")[0];
-      return myArray;
-  })
- return response;
-  }
+  const response = await fetch(url);
+  const html= await response.text();
+  var titleIndex = html.search('"defaultMetadata":{"simpleText":"') +'"defaultMetadata":{"simpleText":"'.length
+  var bigString = html.slice(titleIndex);
+  const myArray = bigString.split("\"")[0];
+  return myArray;
+}
+
+
+
+
 
