@@ -5,9 +5,10 @@ var currentService = "";
 navDropdown.addEventListener('click', function (event) {
     event.stopPropagation();
     var thisButton = event.target;
-currentService = thisButton.textContent;
-console.log(currentService)
+    currentService = thisButton.textContent;
 
-getTopTenApi(currentService,'AU')
+    window.console.log(currentService);
+
+    getTopTenApi(currentService, 'AU');
 
 });

@@ -39,13 +39,13 @@ function getTopTenApi(service, countryCode) {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            console.log(data)
+            //console.log(data)
              genToken = "Bearer " + data.token;
                 //getTopTenApi(service, countryCode ); //'7060','shazam'
                 getApiWithToken();
 
         }).catch(function (error) {
-            console.log(error);
+           // console.log(error);
         });
     }
     // ----- End of refresh token ----- */
@@ -89,21 +89,23 @@ function getTopTenApi(service, countryCode) {
             },
         }).then(function (response) {
             if (response.ok) {
-                console.log(service + ' test response OK:');
-                console.log(response);
+             //   console.log(service + ' test response OK:');
+             //   console.log(response);
                 return response.json();
             }
-            console.log('test response !OK:');
-            console.log(response);
+            //console.log('test response !OK:');
+           // console.log(response);
             throw response;
         }).then(function (data) {
-            console.log(data);
+          //  console.log(data);
             cityStore = data;
-            //makeDiv();
+            makeTopTenListCentre();
+
         }).catch(function (error) {
-            console.warn(error);
+            //console.warn(error);
         })
-    };
+    }; //end getApiWithToken ------------------------
+
     refreshCmApiToken()
 }
 
