@@ -88,9 +88,10 @@ function getTopListElement(elementData, index, isActive) {
 // Function to find the lyrics and display in the description if available
 
 function lyricsFinder(songName, youtubeDescription) {
+  $("#description").text('');
   var trackId = 'http://api.musixmatch.com/ws/1.1/track.search?q_track=' + songName + '&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66';
   var idNumber;
-  
+
   fetch(trackId)
     .then(function (response) {
       return response.json();
@@ -106,7 +107,7 @@ function lyricsFinder(songName, youtubeDescription) {
           console.log(data.message.body.lyrics.lyrics_body);
           $("#description").text(data.message.body.lyrics.lyrics_body);
 
-          
+
         }).catch(function() {
           $("#description").text(youtubeDescription);
         })
@@ -114,7 +115,7 @@ function lyricsFinder(songName, youtubeDescription) {
     }).catch(function() {
       $("#description").text(youtubeDescription);
     })
-    
+
 
 }
 // Function to display youtube window
@@ -123,10 +124,19 @@ var currentElementIndex = null;
 function onClickTopItem(index) {
   if (currentElementIndex === null || currentElementIndex !== index) {
     currentElementIndex = index;
+    //need to allow for chartmetric or youtube data
+    if(currentService=='youtube'||currentService==''){//youtube
     var element = items[index];
     lyricsFinder(element.snippet.title, element.snippet.description)
-    
+
+    $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);}
+    else{ //chartmetric services
+      var element = cityStore.obj.data[index];
+    lyricsFinder(element.name, "Sorry, we don't seem to have lyrics yet for " + element.name + " by " + element.artist_names[0]);
+
     $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
+
+    }
   }
 }
 
@@ -167,12 +177,12 @@ fetch(url)
   .then(function (data) {
     var favourites = getFavourites();
     items = data.items;
+    $("#top-list-container").innerHTML = ''; //reset old list to nothing
 
     for (var index = 0; index < items.length; index++) {
       var elementData = items[index];
       var listItem = getTopListElement(elementData, index, favourites[index]);
       $("#top-list-container").append(listItem);
-
     }
   });
 

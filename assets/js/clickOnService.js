@@ -8,7 +8,7 @@ navDropdown.addEventListener('click', function (event) {
     currentService = thisButton.textContent;
 
    // window.console.log(currentService);
-
+localStorage.setItem('currentService',currentService);
     getTopTenApi(currentService, 'AU');
 
 });

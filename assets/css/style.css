@@ -149,6 +149,15 @@ body {
   overflow: auto;
   max-height: 300px;
   overflow-wrap: break-word;
+  padding: 6px;
+}
+.desc-grid{
+   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; 
+}
+.desc-item{
+  min-width: 50%;
 }
 
 iframe {

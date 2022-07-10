@@ -12,18 +12,18 @@ function makeTopTenListCentre() {
         var trackName = songData.name; //✅
         var artistName = songData.artist_names.join(' + ');//✅
         var imageUrl = songData.image_url;
-       
+
         //other interesting data
         // var releaseDate = songData.release_dates[0]; //on 2 shazam and spotify
         var albumLabel = '';
-        if (currentService!='soundcloud') {
+        if (currentService != 'soundcloud') {
             albumLabel = songData.album_label[0]
         } //on 2 shazam and spotify
         var albumName = songData.album_names[0];//✅
         var addedAt = moment(songData.added_at).format(momFormat1);//✅
         var artistImageUrl = '';
-        if (currentService!='soundcloud') {
-            artistImageUrl = `<a href="` + songData.artist_images.join(`">photo </a><a href="`) +  `">photo </a>`;
+        if (currentService != 'soundcloud') {
+            artistImageUrl = `<a href="` + songData.artist_images.join(`">photo </a><a href="`) + `">photo </a>`;
         } //on 2 shazam and spotify
         // var peakRank = songData.peakRank; //on 2 shazam and spotify
         var previousRank = songData.pre_rank;//✅
@@ -31,11 +31,11 @@ function makeTopTenListCentre() {
 
 
         // make the desciption divs 
-        var descriptionArray = [{ name: "album: ", data: albumName }, { name: "label", data: albumLabel }, { name: "date", data: addedAt }, { name: "rank", data: currentRank }, { name: "last rank", data: previousRank }, { name: 'artist image links', data: artistImageUrl  }];
+        var descriptionArray = [{ name: "album", data: albumName }, { name: "label", data: albumLabel }, { name: "date", data: addedAt }, { name: "rank", data: currentRank }, { name: "last rank", data: previousRank }, { name: 'artist image links', data: artistImageUrl }];
         var descriptionList = '';
         for (var des = 0; des < descriptionArray.length; des++) {
             if (descriptionArray[des].data) {
-                descriptionList += `<div class="desc s6">${descriptionArray[des].name}: ${descriptionArray[des].data}</div>`
+                descriptionList += `<div class="desc-item">${descriptionArray[des].name}: ${descriptionArray[des].data}</div>`
             }
 
         }
@@ -52,14 +52,16 @@ function makeTopTenListCentre() {
     </div>
 </div>
 <pre class="collapsible-body white-text black description" style="display: none;">
-    ${descriptionList}
+    <div class="desc-grid">
+        ${descriptionList}
+    </div>
 </pre>
 </li>`
 
 
     };// End of function makeTopTenListCentre
 
-    window.console.log(trackName + " - " + artistName + " - " + imageUrl + " - " + addedAt);
+    // window.console.log(trackName + " - " + artistName + " - " + imageUrl + " - " + addedAt);
 
 
 
