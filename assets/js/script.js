@@ -22,7 +22,7 @@ function getFavouriteListElement(title, index) {
     "<li id='" +
     "favourite-item-" +
     index +
-    "' class='collection-item row'>" +
+    "' class='collection-item col m4 l12'>" +
     "<span class='title col s10'>" +
     title +
     "</span>" +
@@ -143,6 +143,7 @@ function onAddFacourite(index) {
     $("#add-favourite-" + index).addClass("active-favourite-action");
   }
 }
+{/* <li id="favourite-item-0" class="collection-item col m4 l12"><span class="title col s10">周杰倫 Jay Chou【最偉大的作品 Greatest Works of Art】Official MV</span><a href="#!" class="secondary-content col s2 remove-action" onclick="onRemoveFacourite(0)"><i class="material-icons">clear</i></a></li> */}
 
 // Deleting favourites from list
 function onRemoveFacourite(index) {
