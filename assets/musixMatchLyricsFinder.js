@@ -25,5 +25,5 @@ function lyricsFinder(songName) {
     })
 
 }
-lyricsFinder("Higher Love");
+// lyricsFinder("Higher Love");
 
