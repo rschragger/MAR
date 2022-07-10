@@ -10,7 +10,7 @@ var apiKey = "AIzaSyDP8yc-Z0ZxV-aou3CkADOCBBlob-d79J0";
 var items;
 
 // Getting favourites from local storage and displaying into favourites section
-function getFavourites () {
+function getFavourites() {
   var favourites = localStorage.getItem("favourites");
   if (favourites) {
     return JSON.parse(favourites) || {};
@@ -24,7 +24,7 @@ function getFavouriteListElement(title, index) {
     "<li id='" +
     "favourite-item-" +
     index +
-    "' class='collection-item row'>" +
+    "' class='collection-item col m4 l12'>" +
     "<span class='title col s10'>" +
     title +
     "</span>" +
@@ -111,16 +111,17 @@ function getTopListElement(elementData, index, isActive,videoId) {
 // Function to find the lyrics and display in the description if available
 
 function lyricsFinder(songName, youtubeDescription) {
-  var trackId = 'http://api.musixmatch.com/ws/1.1/track.search?q_track=' + songName + '&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66';
+  $("#description").text('');
+  var trackId = 'https://api.musixmatch.com/ws/1.1/track.search?q_track=' + songName + '&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66';
   var idNumber;
-  
+
   fetch(trackId)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       idNumber = data.message.body.track_list[0].track.track_id;
-      var myLink = 'http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + idNumber + '&apikey=976be22c1d2c0d79345b9f3c25a4da66';
+      var myLink = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + idNumber + '&apikey=976be22c1d2c0d79345b9f3c25a4da66';
       fetch(myLink)
         .then(function (response) {
           return response.json();
@@ -129,15 +130,15 @@ function lyricsFinder(songName, youtubeDescription) {
           console.log(data.message.body.lyrics.lyrics_body);
           $("#description").text(data.message.body.lyrics.lyrics_body);
 
-          
-        }).catch(function() {
+
+        }).catch(function () {
           $("#description").text(youtubeDescription);
         })
 
-    }).catch(function() {
+    }).catch(function () {
       $("#description").text(youtubeDescription);
     })
-    
+
 
 }
 // Function to display youtube window
@@ -146,10 +147,20 @@ var currentElementIndex = null;
 function onClickTopItem(index) {
   if (currentElementIndex === null || currentElementIndex !== index) {
     currentElementIndex = index;
-    var element = items[index];
-    lyricsFinder(element.snippet.title, element.snippet.description)
-    
-    $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
+    //need to allow for chartmetric or youtube data
+    if (currentService == 'youtube' || currentService == '') {//youtube
+      var element = items[index];
+      lyricsFinder(element.snippet.title, element.snippet.description)
+
+      $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
+    }
+    else { //chartmetric services
+      var element = cityStore.obj.data[index];
+      lyricsFinder(element.name, "Sorry, we don't seem to have lyrics yet for " + element.name + " by " + element.artist_names[0]);
+
+      $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
+
+    }
   }
 }
 
@@ -166,6 +177,7 @@ function onAddFacourite(index) {
     $("#add-favourite-" + index).addClass("active-favourite-action");
   }
 }
+{/* <li id="favourite-item-0" class="collection-item col m4 l12"><span class="title col s10">周杰倫 Jay Chou【最偉大的作品 Greatest Works of Art】Official MV</span><a href="#!" class="secondary-content col s2 remove-action" onclick="onRemoveFacourite(0)"><i class="material-icons">clear</i></a></li> */ }
 
 // Deleting favourites from list
 function onRemoveFacourite(index) {
@@ -190,6 +202,7 @@ fetch(url)
   .then(function (data) {
     var favourites = getFavourites();
     items = data.items;
+    $("#top-list-container").innerHTML = ''; //reset old list to nothing
 
     for (var index = 0; index < items.length; index++) {
       var elementData = items[index];
@@ -197,7 +210,6 @@ fetch(url)
       //to find song name
       var listItem = getTopListElement(elementData, index, favourites[index],elementData.id);
       $("#top-list-container").append(listItem);
-
     }
   });
 
