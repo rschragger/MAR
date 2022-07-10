@@ -1,4 +1,6 @@
-
+//MINA FIRST CHANGE, I added lyricsStorer as an array which stores lyrics from 0 to 9 where 0 is
+//the first song and 9 is the last song
+var lyricsStorer=[];
 // Declaring variables
 var videoLinks = [];
 var numberOfvideos = 0;
@@ -37,7 +39,22 @@ function getFavouriteListElement(title, index) {
   );
 }
 
-function getTopListElement(elementData, index, isActive) {
+ //MINA SECOND CHANGE:I added video id to the function so that it can take the video id of each video
+ //and uses it to find the song name
+ //NB youtube does not return the song name, so I made a specific function for that called
+ //songNameFinder, it can be found below.
+
+ //HERE IS THE PROBLEM:-
+ //THAT songNameFinder FUNCTION SOMETIMES, IT IS NOT EXECUTED EVERYTIME 
+ //WITH THE NEW VIDEO ID, SOMETIMES IT GETS EXECUTED TWICE WITH THE SAME ID
+ //THATS WHY ALTHOUGH   console.log(videoId) GETS ALL IDS,   console.log(songName) DOES NOT GET
+ //ALL THE SONGS. PLEASE TRY TO FIX THIS
+
+function getTopListElement(elementData, index, isActive,videoId) {
+  console.log(videoId);
+  var songName = songNameFinder(videoId);
+  console.log(songName);
+  lyricsStorer[videoId]= "";
   var activeClass = "";
   if (isActive) activeClass = " active-favourite-action";
   return (
@@ -80,6 +97,7 @@ function getTopListElement(elementData, index, isActive) {
     "</pre>" +
     "</li>"
   );
+  
 }
 
 // Functions creating list elements end
@@ -157,8 +175,11 @@ function onRemoveFacourite(index) {
 
 // Making a fetch request to display top 10 videos
 var maxResult = 10;
-var url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${maxResult}&regionCode=AU&videoCategoryId=10&key=${apiKey}`;
-console.log(url);
+
+// var url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${maxResult}&regionCode=au&videoCategoryId=10&key=${apiKey}`;
+var url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${maxResult}&videoCategoryId=10&key=${apiKey}`;
+
+console.log("this is the url "+url);
 fetch(url)
   .then(function (response) {
     return response.json();
@@ -169,7 +190,9 @@ fetch(url)
 
     for (var index = 0; index < items.length; index++) {
       var elementData = items[index];
-      var listItem = getTopListElement(elementData, index, favourites[index]);
+      //MINA THIRD CHANGE:I ADDED elementData.id that has the video id so that it can be used
+      //to find song name
+      var listItem = getTopListElement(elementData, index, favourites[index],elementData.id);
       $("#top-list-container").append(listItem);
 
     }
@@ -201,3 +224,33 @@ $(document).ready(function () {
   }
 });
 
+//THIS FUNCTION GETS NAME OF SONG THROUGH DOWNLOADING THE YOUTUBE PAGE OF THE SONG THEN 
+//SEARCHING FOR THE MUSIC TITLE  AND GET IT.
+
+function songNameFinder(youtubeVideoIdNumber){
+  var musicTitle ="";
+  var titleIndex = 0;
+  var length = 33;
+  var indexWoutLength = 0;
+var url = "https://www.youtube.com/watch?v="+ youtubeVideoIdNumber;
+fetch(url).then(function (response) {
+	// The API call was successful!
+	return response.text();
+}).then(function (html) {
+	// This is the HTML from our response as a text string
+  indexWoutLength = html.search('"defaultMetadata":{"simpleText":"');
+  
+}).then(function(){
+  titleIndex =   indexWoutLength + length;
+  console.log("title index "+titleIndex+"length "+ length);
+  var bigString = html.slice(titleIndex);
+  musicTitle = bigString.split("\"")[0];
+  
+    console.log(musicTitle);
+
+  }
+)
+
+
+
+}
