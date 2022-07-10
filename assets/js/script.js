@@ -69,11 +69,13 @@ function getTopListElement(elementData, index, isActive) {
 // Function to find the lyrics and display in the description if available
 
 function lyricsFinder(songName, youtubeDescription) {
+
   $("#description").text("");
   var trackId =
     "http://api.musixmatch.com/ws/1.1/track.search?q_track=" +
     songName +
     "&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66";
+
   var idNumber;
 
   fetch(trackId)
@@ -82,10 +84,12 @@ function lyricsFinder(songName, youtubeDescription) {
     })
     .then(function (data) {
       idNumber = data.message.body.track_list[0].track.track_id;
+
       var myLink =
         "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" +
         idNumber +
         "&apikey=976be22c1d2c0d79345b9f3c25a4da66";
+
       fetch(myLink)
         .then(function (response) {
           return response.json();
@@ -93,10 +97,12 @@ function lyricsFinder(songName, youtubeDescription) {
         .then(function (data) {
           console.log(data.message.body.lyrics.lyrics_body);
           $("#description").text(data.message.body.lyrics.lyrics_body);
+
         })
         .catch(function () {
           $("#description").text(youtubeDescription);
         });
+
     })
     .catch(function () {
       $("#description").text(youtubeDescription);
@@ -108,6 +114,7 @@ function onClickTopItem(index) {
   if (currentElementIndex === null || currentElementIndex !== index) {
     currentElementIndex = index;
     //need to allow for chartmetric or youtube data
+
     if (currentService == "youtube" || currentService == "") {
       //youtube
       var element = items[index];
@@ -126,6 +133,7 @@ function onClickTopItem(index) {
       );
 
       // $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
+
     }
   }
 }
@@ -202,6 +210,7 @@ function onClickFavoriteItem(id) {
     }
   }
 }
+
 
 // Deleting favourites from list
 function onRemoveFacourite(id) {
