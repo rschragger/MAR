@@ -1,0 +1,37 @@
+SHAZAM
+
+added_at: "2022-07-02T00:00:00.000Z"
+album_ids: [21925196]
+album_label: ['℗ 2022 CYB3RPVNK']
+album_names: ['Sway My Way - Single']
+album_upc: ['5056495059356']
+artist_covers: (2) [null, null]
+artist_images: (2) ['https://www.dropbox.com/s/0egvu05frh4pvkn/grey-4.jpg', null]
+artist_names: (2) ['R3HAB', 'Amy Shark']
+city: null
+cm_artist: (2) [3455, 144603]
+cm_track: 83610298
+code2: "AU    "
+code2s: (2) ['NL', 'AU']
+id: "616353876"
+image_url: "https://is4-ssl.mzstatic.com/image/thumb/Music112/v4/a4/c0/2b/a4c02be3-1c46-aeb6-7d3d-4298bedc1bc5/5056495059356_1.jpg/400x400cc.jpg"
+isrc: "AEA2D2200239"
+itunes_album_id: ['1624993261']
+itunes_album_ids: ['1624993261']
+itunes_artist_ids: (2) [331900515, 1083179259]
+itunes_artist_names: (2) ['R3HAB', 'Amy Shark']
+itunes_id: 42953388
+itunes_track_id: "1624993570"
+itunes_track_ids: ['1624993570']
+name: "Sway My Way"
+num_of_shazams: 46675
+peak_date: "2022-07-03T00:00:00.000Z"
+peak_rank: 1
+pre_rank: 1
+rank: 1
+rankStats: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+release_dates: ['2022-06-10T00:00:00.000Z']
+shazam_track_id: "616353876"
+storefronts: ['KH']
+time_on_chart: 29
+velocity: 0.14285714285714285

@@ -1,0 +1,81 @@
+cityStore.obj.data[I]=
+
+added_at: "2022-07-02T00:00:00.000Z"
+album_ids: Array(1)
+0: 860176
+length: 1
+[[Prototype]]: Array(0)
+album_label: Array(1)
+0: "Parlophone UK"
+length: 1
+[[Prototype]]: Array(0)
+album_names: Array(1)
+0: "Hounds Of Love"
+length: 1
+[[Prototype]]: Array(0)
+album_ups: Array(1)
+0: "5099902930152"
+length: 1
+[[Prototype]]: Array(0)
+artist_covers: Array(1)
+0: null
+length: 1
+[[Prototype]]: Array(0)
+artist_images: Array(1)
+0: "https://i.scdn.co/image/ab67616100005174187017724e58e78ee1f5a8e4"
+length: 1
+[[Prototype]]: Array(0)
+artist_names: Array(1)
+0: "Kate Bush"
+length: 1
+[[Prototype]]: Array(0)
+chart_name: "REGIONAL DAILY"
+chart_type: "regional"
+cm_artist: Array(1)
+0: 105703
+length: 1
+[[Prototype]]: Array(0)
+cm_track: 12662506
+code2: "AU"
+code2s: Array(1)
+0: "GB"
+length: 1
+[[Prototype]]: Array(0)
+current_plays: null
+duration: "daily"
+id: 205959
+image_url: "https://i.scdn.co/image/ab67616d0000b27396ab64f52273635308b6bf27"
+isrc: "GBCNR8500002"
+name: "Running Up That Hill (A Deal With God)"
+peak_date: "2022-05-31T00:00:00.000Z"
+peak_rank: 1
+pre_rank: 1
+rank: 1
+rankStats: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+release_dates: Array(1)
+0: "1985-01-01T00:00:00.000Z"
+length: 1
+[[Prototype]]: Array(0)
+spotify: 205959
+spotify_album_id: "5BWl0bB1q0TqyFmkBEupZy"
+spotify_album_ids: Array(1)
+0: "5BWl0bB1q0TqyFmkBEupZy"
+length: 1
+[[Prototype]]: Array(0)
+spotify_artist_ids: Array(1)
+0: "1aSxMhuvixZ8h9dK9jIDwL"
+length: 1
+[[Prototype]]: Array(0)
+spotify_artist_names: Array(1)
+0: "Kate Bush"
+length: 1
+[[Prototype]]: Array(0)
+spotify_duration_ms: 298933
+spotify_popularity: 96
+spotify_track_ids: Array(1)
+0: "75FEaRjZTKLhTrFGsfMUXR"
+length: 1
+[[Prototype]]: Array(0)
+time_on_chart: 42
+track_genre: "art pop,art rock,baroque pop,dance rock,new wave,new wave pop,permanent wave,piano rock,singer-songwriter"
+velocity: 0

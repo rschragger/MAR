@@ -1,0 +1,32 @@
+SOUNDCLOUD
+
+added_at: "2022-07-02T00:00:00.000Z"
+album_names: [null]
+album_title: null
+artist: "MANSUS"
+artist_names: ['MANSUS']
+artwork_url: "https://i1.sndcdn.com/artworks-OvMjQWngXoYIZN93-AsXUOA-large.jpg"
+cm_track: null
+country: "AU    "
+created_at: "2022-06-26T12:59:15.000Z"
+genre: "Hip-hop & Rap"
+id: "1294623565"
+image_url: "https://i1.sndcdn.com/artworks-OvMjQWngXoYIZN93-AsXUOA-large.jpg"
+isrc: null
+kind: "trending"
+modified_at: "2022-07-09T19:10:36.639Z"
+name: "YP ONEFOUR X XXXTENTACION 🔥(MANSUS DRILL REMIX)"
+permalink_url: "https://soundcloud.com/mansusofficial/ypinterlude"
+playcount_all: 32404
+playcount_weekly: 3852
+pre_rank: 1
+public: true
+publisher: null
+rank: 1
+rankStats: (5) [{…}, {…}, {…}, {…}, {…}]
+soundcloud_track_id: "1294623565"
+soundcloud_user: {avatar_url: 'https://i1.sndcdn.com/avatars-jxgAsuPigqcaawI2-9YAwWg-large.jpg', first_name: '', followers_count: 7997, full_name: '', id: 691888850, …}
+time_on_chart: 12
+velocity: null
+writer_composer: null
+[[Prototype]]: Object
