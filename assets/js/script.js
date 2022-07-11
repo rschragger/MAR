@@ -1,7 +1,7 @@
 // Declaring variables
 var videoLinks = [];
 var numberOfvideos = 0;
-var items;
+var items = [];
 var currentElementIndex = null;
 
 // Getting favourites from local storage and displaying into favourites section
@@ -13,133 +13,37 @@ function getFavourites() {
   return {};
 }
 
-// Functions creating list elements start
-function getFavouriteListElement(title, id) {
-  return `
-    <li id='favourite-item-${id}' class='collection-item col m4 l12 favourite-item' onclick='onClickFavoriteItem(${id})'>
-      <span class='title col s10'>
-        ${title}
-      </span>
-      <a  href='#!' class='secondary-content col s2 remove-action' onclick='onRemoveFacourite(${id})'>
-        <i class='material-icons'>clear</i>
-      </a>
-    </li>
-    `;
-}
-
-function getTopListElement(elementData, index, isActive) {
-  var activeClass = "";
-  if (isActive) activeClass = " active-favourite-action";
-  return `
-    <li class='top-list-item' onclick='onClickTopItem(${index})'>
-      <div class='collapsible-header top-list-item-header waves-effect waves-teal'>
-        <div>
-          <span class='top-number'>
-            ${index + 1}
-          </span>
-          <img src='${
-            elementData.snippet.thumbnails.default.url
-          }' alt='' width='40' height='40' class='circle'/>
-          <div class='top-list-item-title-box'>
-            <span class='title'>
-              ${elementData.snippet.title}
-            </span>
-            <p>
-              ${elementData.snippet.channelTitle}
-            </p>
-          </div>
-          <a 
-            href='#!' 
-            id='add-favourite-${index}' 
-            class='secondary-content add-favourite-action${activeClass}'
-            onclick='onAddFacourite(${index})'>
-            <i class='material-icons'>favorite</i>
-          </a>
-        </div>
-      </div>
-      <pre class='collapsible-body white-text description'>
-        ${elementData.snippet.description}
-      </pre>
-    </li>
-    `;
-}
-
-// Functions creating list elements end
-
-// Function to find the lyrics and display in the description if available
-
-function lyricsFinder(songName, youtubeDescription) {
-
-  $("#description").text("");
-  var trackId =
-    "http://api.musixmatch.com/ws/1.1/track.search?q_track=" +
-    songName +
-    "&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66";
-
-  var idNumber;
-
-  fetch(trackId)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      idNumber = data.message.body.track_list[0].track.track_id;
-
-      var myLink =
-        "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" +
-        idNumber +
-        "&apikey=976be22c1d2c0d79345b9f3c25a4da66";
-
-      fetch(myLink)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          console.log(data.message.body.lyrics.lyrics_body);
-          $("#description").text(data.message.body.lyrics.lyrics_body);
-
-        })
-        .catch(function () {
-          $("#description").text(youtubeDescription);
-        });
-
-    })
-    .catch(function () {
-      $("#description").text(youtubeDescription);
-    });
-}
-// Function to display youtube window
-
 function onClickTopItem(index) {
   if (currentElementIndex === null || currentElementIndex !== index) {
     currentElementIndex = index;
-    //need to allow for chartmetric or youtube data
+    var currentService = localStorage.getItem("currentService");
 
-    if (currentService == "youtube" || currentService == "") {
+    //need to allow for chartmetric or youtube data
+    if (currentService == "youtube") {
       //youtube
       var element = items[index];
-      lyricsFinder(element.snippet.title, element.snippet.description);
+      lyricsFinder(element.snippet.title);
 
       $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
     } else {
       //chartmetric services
       var element = cityStore.obj.data[index];
-      lyricsFinder(
-        element.name,
-        "Sorry, we don't seem to have lyrics yet for " +
-          element.name +
-          " by " +
-          element.artist_names[0]
-      );
+      lyricsFinder(element.name);
 
-      // $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
+     $("#aoudio").attr("src", `https://api.chartmetric.com/api/track/${element.id}.mp3`);
 
+      // element.itunes_track_id
+      // ? element.itunes_track_id
+      // : element.spotify_track_ids
+      // ? element.spotify_track_ids[0]
+      // : element.id
     }
   }
 }
 
 // Ability to add favourites to local storage
-function onAddFacourite(index) {
+function onAddFacourite(index, event) {
+  event.stopPropagation();
   var favourites = getFavourites();
   var currentService = localStorage.getItem("currentService");
 
@@ -147,8 +51,8 @@ function onAddFacourite(index) {
     var currentList = items;
     var item = currentList[index];
 
-    if (!favourites[item.id]) {
-      favourites[item.id] = {
+    if (!favourites[String(item.id)]) {
+      favourites[String(item.id)] = {
         index: index,
         id: item.id,
         name: item.snippet.title,
@@ -164,8 +68,8 @@ function onAddFacourite(index) {
     var currentList = cityStore.obj.data;
     var item = currentList[index];
 
-    if (!favourites[item.id]) {
-      favourites[item.id] = {
+    if (!favourites[String(item.id)]) {
+      favourites[String(item.id)] = {
         index: index,
         id: item.id,
         name: item.name,
@@ -183,62 +87,78 @@ function onAddFacourite(index) {
 
 function onClickFavoriteItem(id) {
   var favourites = getFavourites();
-  var item = favourites[id];
-  var itemIndex = item;
+  var item = favourites[String(id)];
+  var itemIndex = item.index;
 
-  if (currentElementIndex === null || currentElementIndex !== index) {
+  if (currentElementIndex === null || currentElementIndex !== itemIndex) {
     currentElementIndex = itemIndex;
 
     if (item.serviceType == "youtube") {
       //youtube
       var element = items[itemIndex];
-      lyricsFinder(item.name, element.snippet.description);
+      if (element) lyricsFinder(item.name);
 
       $("#player").attr("src", `https://www.youtube.com/embed/${item.id}`);
     } else {
       //chartmetric services
       var element = cityStore.obj.data[itemIndex];
-      lyricsFinder(
-        item.name,
-        "Sorry, we don't seem to have lyrics yet for " +
-          item.name +
-          " by " +
-          element.artist_names[0]
-      );
+      lyricsFinder(item.name);
 
       // $("#player").attr("src", `https://www.youtube.com/embed/${element.id}`);
     }
   }
 }
 
-
 // Deleting favourites from list
-function onRemoveFacourite(id) {
+function onRemoveFacourite(id, event) {
+  event.stopPropagation();
   var favourites = getFavourites();
-  var itemIndex = favourites[id].index;
-  delete favourites[id];
+  var itemIndex = favourites[String(id)].index;
+  delete favourites[String(id)];
 
   localStorage.setItem("favourites", JSON.stringify(favourites));
-
   $("#favourite-item-" + id).remove();
   $("#add-favourite-" + itemIndex).removeClass("active-favourite-action");
 }
 
-// Making a fetch request to display top 10 videos
 
 $(document).ready(function () {
   var currentService = localStorage.getItem("currentService");
-
+  $("#top-list-container").empty();
+  $("#top-list-container").append(`
+      <li class="top-list-item loading">
+        <div class="preloader-wrapper active">
+          <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+    `);
   switch (currentService) {
     case null:
       localStorage.setItem("currentService", "youtube");
       keyTry();
+      $("#headerLogo").attr("src", `./assets/images/header/youtube.svg`);
       break;
     case "youtube":
       keyTry();
+      $("#headerLogo").attr(
+        "src",
+        `./assets/images/header/${currentService}.svg`
+      );
       break;
     default:
       getTopTenApi(currentService, "AU");
+      $("#headerLogo").attr(
+        "src",
+        `./assets/images/header/${currentService}.svg`
+      );
       break;
   }
 
@@ -263,6 +183,8 @@ $(document).ready(function () {
 
   for (var index = 0; index < favouritesKeys.length; index++) {
     var key = favouritesKeys[index];
-    $("#favourites").append(getFavouriteListElement(favourites[key].name, key));
+    $("#favourites").append(
+      getFavouriteListElement(favourites[String(key)].name, key)
+    );
   }
 });

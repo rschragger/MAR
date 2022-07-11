@@ -18,7 +18,13 @@ function keyTry(myApiKey, searchTag, searchLimit) {
 
       for (var index = 0; index < items.length; index++) {
         var elementData = items[index];
-        var listItem = getTopListElement(elementData, index, favourites[index]);
+        var listItem = getTopListElement({
+          id: elementData.id,
+          imgUrl: elementData.snippet.thumbnails.default.url,
+          title: elementData.snippet.title,
+          channelTitle: elementData.snippet.channelTitle,
+          description: elementData.snippet.description,
+        }, index, favourites[String(elementData.id)]);
         $("#top-list-container").append(listItem);
       }
     });
