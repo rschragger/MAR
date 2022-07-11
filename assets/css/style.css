@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Rajdhani:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Rajdhani:wght@300&display=swap");
 
 * {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -78,6 +78,8 @@ body {
 .heading {
   line-height: 64px;
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 #nav {
@@ -86,6 +88,10 @@ body {
 
 .nav-extended {
   margin: 3px;
+}
+
+#headerLogo {
+  height: 100px;
 }
 
 .search-input {
@@ -104,7 +110,7 @@ body {
   margin: 0;
 }
 
-.top-list-item-header>div {
+.top-list-item-header > div {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -145,6 +151,10 @@ body {
   width: 100%;
 }
 
+.top-list-item-title-box span {
+  font-weight: 600;
+}
+
 .description {
   overflow: auto;
   max-height: 200px;
@@ -152,12 +162,28 @@ body {
   padding: 6px;
 background-color: black;
 }
-.desc-grid{
-   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; 
+
+#searchLyrics {
+  color: #fff;
 }
-.desc-item{
+
+.try-it {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+}
+
+.desc-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.desc-item {
   min-width: 50%;
 }
 
@@ -207,7 +233,6 @@ i:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
 }
 
 .footer-logo-image {
@@ -229,7 +254,6 @@ i:hover {
   margin-bottom: 28px;
 }
 
-
 .footer-logo-popper {
   position: absolute;
   right: 50px;
@@ -242,7 +266,6 @@ i:hover {
 .footer-anchor {
   margin-bottom: 20px;
   position: relative;
-
 }
 
 .footer-anchor:hover .footer-logo-popper {
@@ -260,6 +283,50 @@ i:hover {
   height: 60px ;
 }
 
+
+.loading {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  padding: 32px 0;
+}
+
+/* Player */
+.audio-controls {
+	color: #fff;
+}
+
+.audio-controls span {
+	cursor: pointer;
+	display: inline-block;
+	transition: opacity .3s;
+}
+
+.audio-controls span:hover {
+	opacity: .8;
+}
+.audio-controls .fa {
+	font-size: 1.5em;
+}
+
+.audio-controls .play {
+	width: 3em;
+	height: 3em;
+	line-height: 3em;
+	border-radius: 100%;
+	border: 2px solid #fff;
+	margin: 0 1em;
+}
+
+.audio-controls .play .fa-play {
+	margin-left: 8%;
+}
+
+.navbar {
+	height: 4em;
+	line-height: 4em;
+}
+
 /* Media Sizes ----------------- */
 
 @media (max-width: 600px) {
@@ -274,3 +341,5 @@ i:hover {
   #description{
     max-height: 75px;
   }
+
+}
