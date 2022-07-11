@@ -1,3 +1,4 @@
+
 //MINA FIRST CHANGE, I added lyricsStorer as an array which stores video ids from 0 to 9 where 0 is
 //the first song and 9 is the last song
 //@ Reeve Lyrics storer is where we store the the promises of the youtube videos names
@@ -5,6 +6,7 @@
 //linked to the onclick function to display lyrics
 var lyricsStorer=[];
 var apiKey = "AIzaSyDP8yc-Z0ZxV-aou3CkADOCBBlob-d79J0";
+
 
 // Declaring variables
 var videoLinks = [];
@@ -45,7 +47,7 @@ function getFavouriteListElement(title, id) {
  
    var activeClass = "";
   if (isActive) activeClass = " active-favourite-action";
- 
+
   return `
     <li class='top-list-item' onclick='onClickTopItem(${index})'>
       <div class='collapsible-header top-list-item-header waves-effect waves-teal'>
@@ -64,9 +66,11 @@ function getFavouriteListElement(title, id) {
               ${elementData.snippet.channelTitle}
             </p>
           </div>
+
           <a
             href='#!'
             id='add-favourite-${index}'
+
             class='secondary-content add-favourite-action${activeClass}'
             onclick='onAddFacourite(${index})'>
             <i class='material-icons'>favorite</i>
@@ -79,14 +83,55 @@ function getFavouriteListElement(title, id) {
     </li>
     `;
 
- 
-   
+
 }
 
 // Functions creating list elements end
 
 // Function to find the lyrics and display in the description if available
 
+/* <<<<<<< staging
+function lyricsFinder(songName, youtubeDescription) {
+
+  $("#description").text("");
+  var trackId =
+    "http://api.musixmatch.com/ws/1.1/track.search?q_track=" +
+    songName +
+    "&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66";
+
+  var idNumber;
+
+  fetch(trackId)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      idNumber = data.message.body.track_list[0].track.track_id;
+
+      var myLink =
+        "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" +
+        idNumber +
+        "&apikey=976be22c1d2c0d79345b9f3c25a4da66";
+
+      fetch(myLink)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data.message.body.lyrics.lyrics_body);
+          $("#description").text(data.message.body.lyrics.lyrics_body);
+
+        })
+        .catch(function () {
+          $("#description").text(youtubeDescription);
+        });
+
+    })
+    .catch(function () {
+      $("#description").text(youtubeDescription);
+    });
+    */
+// Mina=======
 
 
   async function lyricsFinder(songName,youtubeDescription) {
@@ -109,8 +154,10 @@ catch{
   const data2 = await response2.json();
    myLyrics = data2.message.body.lyrics.lyrics_body;
   return myLyrics;
+// end >>>>>>> mina-new
+
  
- 
+
 
 }
 // Function to display youtube window
@@ -232,6 +279,7 @@ function onRemoveFacourite(id) {
 
 // Making a fetch request to display top 10 videos
 
+
 var maxResult = 10;
 
 var url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${maxResult}&videoCategoryId=10&key=${apiKey}`;
@@ -254,12 +302,15 @@ fetch(url)
     }
   });
 
+
 $(document).ready(function () {
   var currentService = localStorage.getItem("currentService");
 
   switch (currentService) {
     case null:
       localStorage.setItem("currentService", "youtube");
+//<<<<<<< staging - two comments below were used in staging
+ 
 //      keyTry();
       break;
     case "youtube":
@@ -296,6 +347,7 @@ $(document).ready(function () {
 });
 
 
+
 //THIS FUNCTION GETS NAME OF SONG THROUGH DOWNLOADING THE YOUTUBE PAGE OF THE SONG THEN
 //SEARCHING FOR THE MUSIC TITLE  AND GET IT.
 
@@ -308,8 +360,6 @@ async function songNameFinder(youtubeVideoIdNumber){
   const myArray = bigString.split("\"")[0];
   return myArray;
 }
-
-
 
 
 
