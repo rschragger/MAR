@@ -15,7 +15,7 @@ This application will give you the top ten music tracks on various charts. From 
 
 Access to website at https://rschragger.github.io/MAR/
 
-We have anumber of API calls which require strict CORS. If there is any issue on your browser with these calls not working, please be sure to install the extension https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf/related?hl=en and switch it on to enable this application. Please be sure to switch off the extension after use.
+We have a number of API calls which require strict CORS. If there is any issue on your browser with these calls not working, please be sure to install the extension https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf/related?hl=en and switch it on to enable this application. Please be sure to switch off the extension after use.
 
 Github page at https://github.com/rschragger/MAR
 
