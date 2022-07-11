@@ -41,8 +41,9 @@ function onClickTopItem(index) {
       //chartmetric services
       var element = cityStore.obj.data[index];
       lyricsFinder(element.name);
-
-     $("#aoudio").attr("src", `https://api.chartmetric.com/api/track/${element.id}.mp3`);
+      $("#player").attr("src", `https://www.youtube.com/embed/wp43OdtAAkM`); //${element.id}`);
+     //below not ready yet
+     //$("#audio").attr("src", `https://api.chartmetric.com/api/track/${cityStore.obj.data[index].id}.mp3`);
 
       // element.itunes_track_id
       // ? element.itunes_track_id
