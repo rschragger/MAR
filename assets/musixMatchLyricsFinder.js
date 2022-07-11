@@ -8,7 +8,7 @@ function lyricsFinder(songName) {
   description.empty();
 
   var trackId =
-    "http://api.musixmatch.com/ws/1.1/track.search?q_track=" +
+    "https://api.musixmatch.com/ws/1.1/track.search?q_track=" +
     songName +
     "&s_track_rating=desc&f_lyrics_language=en&apikey=976be22c1d2c0d79345b9f3c25a4da66";
   var idNumber;
@@ -20,7 +20,7 @@ function lyricsFinder(songName) {
     .then(function (data) {
       idNumber = data.message.body.track_list[0].track.track_id;
       var myLink =
-        "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" +
+        "https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" +
         idNumber +
         "&apikey=976be22c1d2c0d79345b9f3c25a4da66";
       fetch(myLink)
