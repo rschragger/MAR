@@ -147,9 +147,10 @@ body {
 
 .description {
   overflow: auto;
-  max-height: 300px;
+  max-height: 200px;
   overflow-wrap: break-word;
   padding: 6px;
+background-color: black;
 }
 .desc-grid{
    display: flex;
@@ -253,6 +254,22 @@ i:hover {
   margin-bottom: 10px;
 }
 
+
 .favourite-item {
   cursor: pointer;
 }
+
+/* Media Sizes ----------------- */
+
+@media (max-width: 600px) {
+  #presentation-box{
+    position:fixed;
+    bottom:0;
+    z-index: 1;
+  }
+  .description{
+    max-height: 75px;
+  }
+  #description{
+    max-height: 75px;
+  }
