@@ -255,6 +255,10 @@ i:hover {
 }
 
 
+.favourite-item {
+  cursor: pointer;
+}
+
 /* Media Sizes ----------------- */
 
 @media (max-width: 600px) {
@@ -269,4 +273,3 @@ i:hover {
   #description{
     max-height: 75px;
   }
-}
