@@ -15,7 +15,7 @@ function keyTry(myApiKey, searchTag, searchLimit) {
       var favourites = getFavourites();
       items = data.items;
       $("#top-list-container").empty(); //reset old list to nothing
-
+console.log(data);
       for (var index = 0; index < items.length; index++) {
         var elementData = items[index];
         var listItem = getTopListElement({
