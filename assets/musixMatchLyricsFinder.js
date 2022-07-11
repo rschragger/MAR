@@ -28,7 +28,7 @@ function lyricsFinder(songName) {
           return response.json();
         })
         .then(function (data) {
-          console.log(data.message.body.lyrics.lyrics_body);
+         // console.log(data.message.body.lyrics.lyrics_body);
           description.text(data.message.body.lyrics.lyrics_body);
         })
         .catch(function () {
