@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test LastFM</title>
+</head>
+
+<body>
+  <div id="lyricsDiv"></div>
+</body>
+<script>
+  const apiKeyVal = '2a59d453e1ea99a2a1d8ce0b3135a1be';
+  var lastFmChart = {};
+  var lastFmInfo = {};
+  var lyricsDiv = document.getElementById('lyricsDiv');
+
+
+  // functions-------------------------
+  // These request options seem to be common
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+
+  // lastFMChart fetch --------------------
+  function getLastFmChart() {
+    //we will stay with top ten so variables below will be hard coded
+    var pagesReq = 1;
+    var perPage = 3;//10;
+    var urlLastFmChart = `https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&page=${pagesReq}&limit=${perPage}&api_key=${apiKeyVal}&format=json`
+
+
+
+
+    fetch(urlLastFmChart, requestOptions)
+      .then(response => response.text())
+      .then(function (result) {
+        lastFmChart = JSON.parse(result).tracks.track
+
+        for (let i = 0; i < lastFmChart.length; i++) {
+          addLastFmTrackInfo(lastFmChart[i].artist.name, lastFmChart[i].name,i);
+        }
+      })
+      .catch(error => console.log('error', error));
+  }
+
+
+  // lastFMTrackInfo fetch --------------------
+  function addLastFmTrackInfo(artistName, trackName, index) {
+    // var artistName = 'cher';
+    // var trackName = 'believe';
+   
+
+    fetch(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${apiKeyVal}&artist=${artistName}&track=${trackName}&format=json`, requestOptions)
+      .then(response => response.text())
+      .then(function (result) {
+        let x = JSON.parse(result).track;
+        //the below adds this info to lastFmChart object
+        lastFmChart[index]['extraInfo']= x ;
+      })
+      //.then(result => lastFmTrackInfo = JSON.parse(result))//console.log(result))
+      .catch(error => console.log('error', error));
+
+  }
+
+  getLastFmChart()
+</script>
+
+</html>
